@@ -1,19 +1,13 @@
-import { Application } from 'express';
-
-import authentication from '../routes/authentication';
-import authorisation from '../routes/authorisation';
+import { Application } from "express";
+import authentication from "../routes/authentication";
 
 /**
  * Initialize all routes
  */
 class Routes {
   public authentication(_express: Application): Application {
-    return _express.use('/authentication', authentication);
-  }
-
-  public authorization(_express: Application): Application {
-    return _express.use('/authorization', authorisation);
+    return _express.use("/authentication", authentication);
   }
 }
 
-export default new Routes;
+export default new Routes();

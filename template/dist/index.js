@@ -4,5 +4,5 @@ const express_1 = require("./providers/express");
 /**
  * Start the server
  */
-express_1.default.init();
+express_1.default.init(process.argv[2]);
 //# sourceMappingURL=index.js.map

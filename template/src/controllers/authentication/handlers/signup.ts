@@ -1,5 +1,4 @@
 import * as bcrypt from "bcrypt";
-
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Mutations from "../graphql/mutations";
@@ -17,20 +16,29 @@ class Signup {
         variables: {
           name,
           email: email.toLowerCase(),
-          password: hashPswd
+          password: hashPswd,
         },
-        query: Mutations.InsertUser
+        query: Mutations.InsertUser,
       });
 
       if (!data || !data.data || !data.data.insert_users_one) {
-        const error = errors || data.errors && data.errors[0].message || "Something went wrong!";
+        const error =
+          errors ||
+          (data.errors && data.errors[0].message) ||
+          "Something went wrong!";
         return Common.Response(res, false, error, null);
       }
 
       // create Token for authentication
-      const token = await Helpers.CreateToken({ id: data.data.insert_users_one.id, role: 'user' });
+      const token = await Helpers.CreateToken({
+        id: data.data.insert_users_one.id,
+        role: "user",
+      });
 
-      return Common.Response(res, true, "Signup successfully!", { ...data.data.insert_users_one, ...token });
+      return Common.Response(res, true, "Signup successfully!", {
+        ...data.data.insert_users_one,
+        ...token,
+      });
     } catch (error) {
       return Common.Response(res, false, error.message, null);
     }

@@ -1,6 +1,6 @@
-import Express from './providers/express';
+import Express from "./providers/express";
 
 /**
  * Start the server
  */
-Express.init();
+Express.init(process.argv[2]);

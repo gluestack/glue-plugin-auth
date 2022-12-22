@@ -1,26 +1,26 @@
-import * as jwt from 'jsonwebtoken';
-import Locals from '../providers/locals';
+import * as jwt from "jsonwebtoken";
+import Locals from "../providers/locals";
 
 class Commons {
-  public axios = require('axios');
+  public axios = require("axios");
 
   /**
    * Graphql request
    */
   public async GQLRequest({ variables, query }) {
     const headers = {
-      'content-type': 'application/json',
-      'x-hasura-admin-secret': Locals.config().hasuraAdminSecret
+      "content-type": "application/json",
+      "x-hasura-admin-secret": Locals.config().hasuraAdminSecret,
     };
 
     return await this.axios({
-      url: `${Locals.config().hasuraGraphqlURL}/v1/graphql`,
-      method: 'POST',
+      url: `${Locals.config().hasuraGraphqlURL}`,
+      method: "POST",
       headers: headers,
       data: {
         query,
-        variables
-      }
+        variables,
+      },
     });
   }
 
@@ -37,7 +37,7 @@ class Commons {
   public async CheckError(error: any, res: BodyInit, next: () => void) {
     if (error) {
       const { details } = error;
-      const message = details.map((i: { message: any; }) => i.message).join(',');
+      const message = details.map((i: { message: any }) => i.message).join(",");
 
       return this.Response(res, false, message, null);
     }
@@ -50,7 +50,10 @@ class Commons {
    */
   public async ValidateToken(_token: string) {
     try {
-      let decoded = jwt.verify(_token.replace('Bearer ', ''), Locals.config().jwtSecret);
+      let decoded = jwt.verify(
+        _token.replace("Bearer ", ""),
+        Locals.config().jwtSecret,
+      );
 
       return decoded;
     } catch (err) {
@@ -59,4 +62,4 @@ class Commons {
   }
 }
 
-export default new Commons;
+export default new Commons();

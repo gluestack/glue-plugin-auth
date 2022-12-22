@@ -42,6 +42,7 @@ exports.__esModule = true;
 exports.GlueStackPlugin = void 0;
 var package_json_1 = __importDefault(require("../package.json"));
 var PluginInstance_1 = require("./PluginInstance");
+var attachGraphqlInstance_1 = require("./attachGraphqlInstance");
 var GlueStackPlugin = (function () {
     function GlueStackPlugin(app, gluePluginStore) {
         this.type = "stateless";
@@ -65,15 +66,42 @@ var GlueStackPlugin = (function () {
     GlueStackPlugin.prototype.getTemplateFolderPath = function () {
         return "".concat(process.cwd(), "/node_modules/").concat(this.getName(), "/template");
     };
+    GlueStackPlugin.prototype.getMigrationFolderPath = function () {
+        return "".concat(process.cwd(), "/node_modules/").concat(this.getName(), "/hasura/migrations");
+    };
     GlueStackPlugin.prototype.getInstallationPath = function (target) {
         return "./backend/functions/".concat(target);
     };
     GlueStackPlugin.prototype.runPostInstall = function (instanceName, target) {
         return __awaiter(this, void 0, void 0, function () {
+            var graphqlPlugin, graphqlInstances, authInstance;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
+                    case 0:
+                        graphqlPlugin = this.app.getPluginByName("@gluestack/glue-plugin-graphql");
+                        if (!graphqlPlugin || !graphqlPlugin.getInstances().length) {
+                            console.log("\x1b[36m");
+                            console.log("Install graphql instance: `node glue add graphql graphql-backend`");
+                            console.log("\x1b[31m");
+                            throw new Error("Graphql instance not installed from `@gluestack/glue-plugin-graphql`");
+                        }
+                        graphqlInstances = [];
+                        graphqlPlugin
+                            .getInstances()
+                            .map(function (graphqlInstance) {
+                            if (graphqlInstance.getContainerController().getStatus() === "up" &&
+                                !graphqlInstance.gluePluginStore.get("auth_instance")) {
+                                graphqlInstances.push(graphqlInstance);
+                            }
+                        });
+                        if (!graphqlInstances.length) {
+                            throw new Error("There is no graphql instance up where auth plugin can be installed");
+                        }
+                        return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
                     case 1:
+                        authInstance = _a.sent();
+                        return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
+                    case 2:
                         _a.sent();
                         return [2];
                 }

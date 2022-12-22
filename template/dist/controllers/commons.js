@@ -13,7 +13,7 @@ const jwt = require("jsonwebtoken");
 const locals_1 = require("../providers/locals");
 class Commons {
     constructor() {
-        this.axios = require('axios');
+        this.axios = require("axios");
     }
     /**
      * Graphql request
@@ -21,17 +21,17 @@ class Commons {
     GQLRequest({ variables, query }) {
         return __awaiter(this, void 0, void 0, function* () {
             const headers = {
-                'content-type': 'application/json',
-                'x-hasura-admin-secret': locals_1.default.config().hasuraAdminSecret
+                "content-type": "application/json",
+                "x-hasura-admin-secret": locals_1.default.config().hasuraAdminSecret,
             };
             return yield this.axios({
-                url: `${locals_1.default.config().hasuraGraphqlURL}/v1/graphql`,
-                method: 'POST',
+                url: `${locals_1.default.config().hasuraGraphqlURL}`,
+                method: "POST",
                 headers: headers,
                 data: {
                     query,
-                    variables
-                }
+                    variables,
+                },
             });
         });
     }
@@ -48,7 +48,7 @@ class Commons {
         return __awaiter(this, void 0, void 0, function* () {
             if (error) {
                 const { details } = error;
-                const message = details.map((i) => i.message).join(',');
+                const message = details.map((i) => i.message).join(",");
                 return this.Response(res, false, message, null);
             }
             next();
@@ -60,7 +60,7 @@ class Commons {
     ValidateToken(_token) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let decoded = jwt.verify(_token.replace('Bearer ', ''), locals_1.default.config().jwtSecret);
+                let decoded = jwt.verify(_token.replace("Bearer ", ""), locals_1.default.config().jwtSecret);
                 return decoded;
             }
             catch (err) {
@@ -69,5 +69,5 @@ class Commons {
         });
     }
 }
-exports.default = new Commons;
+exports.default = new Commons();
 //# sourceMappingURL=commons.js.map

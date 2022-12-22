@@ -1,6 +1,6 @@
-import * as express from 'express';
-import Locals from './locals';
-import Routes from './routes';
+import * as express from "express";
+import Locals from "./locals";
+import Routes from "./routes";
 
 class Express {
   /**
@@ -30,24 +30,26 @@ class Express {
    */
   private mountRoutes(): void {
     this.express.use(express.json());
-    this.express = Routes.authorization(this.express);
     this.express = Routes.authentication(this.express);
   }
 
   /**
    * Start the express server
    */
-  public init(): void {
-    const port: number = Locals.config().port;
-
+  public init(port: string): void {
     // Start the server on the specified port
-    this.express.listen(port, () => {
-      console.log('\x1b[33m%s\x1b[0m', `Server :: Running @ http://localhost:${port}`);
-    }).on('error', (_error) => {
-      console.log('Error: ', _error.message);
-    });
+    this.express
+      .listen(port, () => {
+        console.log(
+          "\x1b[33m%s\x1b[0m",
+          `Server :: Running @ http://localhost:${port}`,
+        );
+      })
+      .on("error", (_error) => {
+        console.log("Error: ", _error.message);
+      });
   }
 }
 
 /** Export the express module */
-export default new Express;
+export default new Express();

@@ -7,8 +7,7 @@ const router = (0, express_1.Router)();
 /**
  * Authentication routes
  */
-router.post('/signin', handlers_1.default.signin);
-router.post('/signup', handlers_1.default.signup);
-router.post('/forgot-password', handlers_1.default.forgotPassword);
+router.post("/signin", handlers_1.default.signin);
+router.post("/signup", handlers_1.default.signup);
 exports.default = router;
 //# sourceMappingURL=authentication.js.map

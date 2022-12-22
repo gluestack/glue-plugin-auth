@@ -21,11 +21,11 @@ class Signin {
                 // graphql query
                 const { data } = yield commons_1.default.GQLRequest({
                     variables: { email: email.toLowerCase() },
-                    query: queries_1.default.UserByEmail
+                    query: queries_1.default.UserByEmail,
                 });
                 // error handling
                 if (!data || !data.data || !data.data.users) {
-                    const error = data.errors && data.errors || "Something went wrong!";
+                    const error = (data.errors && data.errors) || "Something went wrong!";
                     return commons_1.default.Response(res, false, error, null);
                 }
                 // check if users response is empty
@@ -38,11 +38,14 @@ class Signin {
                     return commons_1.default.Response(res, false, "Invalid Password", null);
                 }
                 // create Token for authentication
-                const token = yield helpers_1.default.CreateToken({ id: data.data.users[0].id, role: 'guest' });
+                const token = yield helpers_1.default.CreateToken({
+                    id: data.data.users[0].id,
+                    role: "guest",
+                });
                 return res.json({
                     success: true,
-                    message: 'Sign in successfully!',
-                    data: Object.assign({ id: data.data.users[0].id, name: data.data.users[0].name, email: data.data.users[0].email, created_at: data.data.users[0].created_at, updated_at: data.data.users[0].updated_at }, token)
+                    message: "Sign in successfully!",
+                    data: Object.assign({ id: data.data.users[0].id, name: data.data.users[0].name, email: data.data.users[0].email, created_at: data.data.users[0].created_at, updated_at: data.data.users[0].updated_at }, token),
                 });
             }
             catch (error) {

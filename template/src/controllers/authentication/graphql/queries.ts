@@ -9,16 +9,6 @@ class Queries {
       updated_at
     }
   }`;
-
-  public UserByPK = `query ($id: Int!) {
-    users_by_pk(id: $id) {
-      id
-      name
-      email
-      created_at
-      updated_at
-    }
-  }`;
 }
 
-export default new Queries;
+export default new Queries();

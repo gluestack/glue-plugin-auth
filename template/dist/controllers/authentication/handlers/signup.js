@@ -25,16 +25,21 @@ class Signup {
                     variables: {
                         name,
                         email: email.toLowerCase(),
-                        password: hashPswd
+                        password: hashPswd,
                     },
-                    query: mutations_1.default.InsertUser
+                    query: mutations_1.default.InsertUser,
                 });
                 if (!data || !data.data || !data.data.insert_users_one) {
-                    const error = errors || data.errors && data.errors[0].message || "Something went wrong!";
+                    const error = errors ||
+                        (data.errors && data.errors[0].message) ||
+                        "Something went wrong!";
                     return commons_1.default.Response(res, false, error, null);
                 }
                 // create Token for authentication
-                const token = yield helpers_1.default.CreateToken({ id: data.data.insert_users_one.id, role: 'user' });
+                const token = yield helpers_1.default.CreateToken({
+                    id: data.data.insert_users_one.id,
+                    role: "user",
+                });
                 return commons_1.default.Response(res, true, "Signup successfully!", Object.assign(Object.assign({}, data.data.insert_users_one), token));
             }
             catch (error) {

@@ -12,16 +12,7 @@ class Queries {
       updated_at
     }
   }`;
-        this.UserByPK = `query ($id: Int!) {
-    users_by_pk(id: $id) {
-      id
-      name
-      email
-      created_at
-      updated_at
-    }
-  }`;
     }
 }
-exports.default = new Queries;
+exports.default = new Queries();
 //# sourceMappingURL=queries.js.map

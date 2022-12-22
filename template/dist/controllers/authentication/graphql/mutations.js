@@ -7,18 +7,9 @@ class Mutations {
       id
       name
       email
+      password
       created_at
       updated_at
-    }
-  }`;
-        this.SetOTP = `mutation ($id: Int!, $otp: Int) {
-    update_users_by_pk(pk_columns: {id: $id}, _set: {otp: $otp}) {
-      otp
-    }
-  }`;
-        this.ResetPassword = `mutation ($otp: Int, $password: String) {
-    update_users(where: {otp: {_eq: $otp}}, _set: {otp: null, password: $password}) {
-      affected_rows
     }
   }`;
     }

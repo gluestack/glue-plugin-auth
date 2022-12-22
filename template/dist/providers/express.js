@@ -23,22 +23,22 @@ class Express {
      */
     mountRoutes() {
         this.express.use(express.json());
-        this.express = routes_1.default.authorization(this.express);
         this.express = routes_1.default.authentication(this.express);
     }
     /**
      * Start the express server
      */
-    init() {
-        const port = locals_1.default.config().port;
+    init(port) {
         // Start the server on the specified port
-        this.express.listen(port, () => {
-            console.log('\x1b[33m%s\x1b[0m', `Server :: Running @ http://localhost:${port}`);
-        }).on('error', (_error) => {
-            console.log('Error: ', _error.message);
+        this.express
+            .listen(port, () => {
+            console.log("\x1b[33m%s\x1b[0m", `Server :: Running @ http://localhost:${port}`);
+        })
+            .on("error", (_error) => {
+            console.log("Error: ", _error.message);
         });
     }
 }
 /** Export the express module */
-exports.default = new Express;
+exports.default = new Express();
 //# sourceMappingURL=express.js.map
