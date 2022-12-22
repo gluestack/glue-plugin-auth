@@ -75,7 +75,7 @@ var PluginInstanceContainerController = (function () {
         return ["npm", "install"];
     };
     PluginInstanceContainerController.prototype.runScript = function () {
-        return ["npm", "run", "dev", this.getPortNumber()];
+        return ["npm", "run", "dev"];
     };
     PluginInstanceContainerController.prototype.getEnv = function () {
         return __awaiter(this, void 0, void 0, function () {

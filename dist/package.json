@@ -14,7 +14,7 @@
     "license": "ISC",
     "dependencies": {
         "@gluestack/framework": "^0.0.14",
-        "@gluestack/glue-plugin-graphql": "^0.0.4",
+        "@gluestack/glue-plugin-graphql": "^0.0.5",
         "@gluestack/helpers": "^0.0.8",
         "@types/node": "^18.11.17",
         "fs-extra": "^11.1.0"
@@ -26,11 +26,11 @@
     },
     "devDependencies": {
         "@gluestack/framework": "^0.0.14",
-        "@gluestack/glue-plugin-graphql": "^0.0.4",
+        "@gluestack/glue-plugin-graphql": "^0.0.5",
         "typescript": "^4.9.4"
     },
     "peerDependencies": {
         "@gluestack/framework": "^0.0.14",
-        "@gluestack/glue-plugin-graphql": "^0.0.4"
+        "@gluestack/glue-plugin-graphql": "^0.0.5"
     }
 }
