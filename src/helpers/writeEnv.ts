@@ -1,8 +1,10 @@
 import * as fs from "fs";
+import { PluginInstance as AuthPluginInstance } from "../PluginInstance";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
 
 export async function constructEnvFromJson(
+  authInstance: AuthPluginInstance,
   graphqlInstance: GraphqlPluginInstance,
 ) {
   const json = await graphqlInstance.getContainerController().getEnv();
@@ -26,18 +28,20 @@ export async function constructEnvFromJson(
     HASURA_GRAPHQL_ADMIN_SECRET: json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
     HASURA_GRAPHQL_JWT_SECRET: jwt_config.key,
     HASURA_GRAPHQL_JWT_KEY: jwt_config.type,
+    //@ts-ignore
+    APP_PORT: authInstance.getContainerController().getPortNumber(true),
   };
 
   return keys;
 }
 
 export async function writeEnv(
-  authInstance: IInstance,
+  authInstance: AuthPluginInstance,
   graphqlInstance: GraphqlPluginInstance,
 ) {
   const path = `${authInstance.getInstallationPath()}/.env`;
   let env = "";
-  const keys: any = await constructEnvFromJson(graphqlInstance);
+  const keys: any = await constructEnvFromJson(authInstance, graphqlInstance);
   Object.keys(keys).map((key) => {
     env += `${key}="${keys[key]}"
 `;

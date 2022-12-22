@@ -61,7 +61,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.writeEnv = exports.constructEnvFromJson = void 0;
 var fs = __importStar(require("fs"));
-function constructEnvFromJson(graphqlInstance) {
+function constructEnvFromJson(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
         var json, jwt_config, keys;
         return __generator(this, function (_a) {
@@ -85,7 +85,8 @@ function constructEnvFromJson(graphqlInstance) {
                         HASURA_GRAPHQL_URL: graphqlInstance.getGraphqlURL(),
                         HASURA_GRAPHQL_ADMIN_SECRET: json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
                         HASURA_GRAPHQL_JWT_SECRET: jwt_config.key,
-                        HASURA_GRAPHQL_JWT_KEY: jwt_config.type
+                        HASURA_GRAPHQL_JWT_KEY: jwt_config.type,
+                        APP_PORT: authInstance.getContainerController().getPortNumber(true)
                     };
                     return [2, keys];
             }
@@ -101,7 +102,7 @@ function writeEnv(authInstance, graphqlInstance) {
                 case 0:
                     path = "".concat(authInstance.getInstallationPath(), "/.env");
                     env = "";
-                    return [4, constructEnvFromJson(graphqlInstance)];
+                    return [4, constructEnvFromJson(authInstance, graphqlInstance)];
                 case 1:
                     keys = _a.sent();
                     Object.keys(keys).map(function (key) {

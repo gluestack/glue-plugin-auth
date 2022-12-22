@@ -1,6 +1,7 @@
 const { SpawnHelper, DockerodeHelper } = require("@gluestack/helpers");
 import IApp from "@gluestack/framework/types/app/interface/IApp";
 import IContainerController from "@gluestack/framework/types/plugin/interface/IContainerController";
+import { generateDockerfile } from "./create-dockerfile";
 import { constructEnvFromJson } from "./helpers/writeEnv";
 import { PluginInstance } from "./PluginInstance";
 const { GlobalEnv } = require("@gluestack/helpers");
@@ -44,7 +45,7 @@ export class PluginInstanceContainerController implements IContainerController {
   }
 
   async getEnv() {
-    return await constructEnvFromJson(this.callerInstance.getGraphqlInstance());
+    return await constructEnvFromJson(this.callerInstance, this.callerInstance.getGraphqlInstance());
   }
 
   getDockerJson() {
@@ -217,6 +218,6 @@ export class PluginInstanceContainerController implements IContainerController {
   }
 
   async build() {
-    //
+    await generateDockerfile(this.callerInstance.getInstallationPath());
   }
 }

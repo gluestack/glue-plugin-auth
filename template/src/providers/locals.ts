@@ -9,6 +9,7 @@ class Locals {
   public static config(): any {
     dotenv.config({ path: path.join(__dirname, "../../.env") });
 
+    const port = process.env.APP_PORT || "";
     const authTokenExpiresIn = process.env.AUTH_TOKEN_EXPIRES_IN || "7D";
     const resetPasswordExpiresIn =
       process.env.RESET_PASSWORD_EXPIRES_IN || "24H";
@@ -22,6 +23,7 @@ class Locals {
     const jwtKey = process.env.HASURA_GRAPHQL_JWT_KEY || "";
 
     return {
+      port,
       authTokenExpiresIn,
       resetPasswordExpiresIn,
       hasuraGraphqlUnauthorizedRole,
