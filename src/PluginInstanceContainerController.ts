@@ -41,7 +41,7 @@ export class PluginInstanceContainerController implements IContainerController {
   }
 
   runScript() {
-    return ["npm", "run", "start:dev", this.getPortNumber()];
+    return ["npm", "run", "dev", this.getPortNumber()];
   }
 
   async getEnv() {
