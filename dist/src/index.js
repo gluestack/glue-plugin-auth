@@ -100,10 +100,15 @@ var GlueStackPlugin = (function () {
                         return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
                     case 1:
                         authInstance = _a.sent();
+                        if (!authInstance) return [3, 4];
                         return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
                     case 2:
                         _a.sent();
-                        return [2];
+                        return [4, authInstance.getContainerController().up()];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2];
                 }
             });
         });

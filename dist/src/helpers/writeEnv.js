@@ -64,11 +64,12 @@ var fs = __importStar(require("fs"));
 function constructEnvFromJson(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
         var json, jwt_config, keys;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4, graphqlInstance.getContainerController().getEnv()];
                 case 1:
-                    json = _a.sent();
+                    json = _b.sent();
                     jwt_config = {
                         type: "",
                         key: ""
@@ -78,16 +79,19 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                     }
                     catch (e) {
                     }
-                    keys = {
+                    _a = {
                         AUTH_TOKEN_EXPIRES_IN: "7D",
                         RESET_PASSWORD_EXPIRES_IN: "24H",
                         HASURA_GRAPHQL_UNAUTHORIZED_ROLE: json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
                         HASURA_GRAPHQL_URL: graphqlInstance.getGraphqlURL(),
                         HASURA_GRAPHQL_ADMIN_SECRET: json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
                         HASURA_GRAPHQL_JWT_SECRET: jwt_config.key,
-                        HASURA_GRAPHQL_JWT_KEY: jwt_config.type,
-                        APP_PORT: authInstance.getContainerController().getPortNumber(true)
+                        HASURA_GRAPHQL_JWT_KEY: jwt_config.type
                     };
+                    return [4, authInstance.getContainerController().getPortNumber()];
+                case 2:
+                    keys = (_a.APP_PORT = _b.sent(),
+                        _a);
                     return [2, keys];
             }
         });

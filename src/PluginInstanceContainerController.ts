@@ -59,18 +59,25 @@ export class PluginInstanceContainerController implements IContainerController {
     return this.status;
   }
 
-  getPortNumber(returnDefault?: boolean): number {
-    if (this.portNumber) {
-      return this.portNumber;
-    }
-    if (returnDefault) {
+  //@ts-ignore
+  async getPortNumber(returnDefault?: boolean) {
+    return new Promise((resolve, reject) => {
+      if (this.portNumber) {
+        return resolve(this.portNumber);
+      }
       let ports =
         this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
-      let port = ports.length ? parseInt(ports[ports.length - 1]) + 1 : 6510;
-      ports.push(port);
-      this.callerInstance.callerPlugin.gluePluginStore.set("ports", ports);
-      return port;
-    }
+      DockerodeHelper.getPort(6670, ports)
+        .then((port: number) => {
+          this.setPortNumber(port);
+          ports.push(port);
+          this.callerInstance.callerPlugin.gluePluginStore.set("ports", ports);
+          return resolve(this.portNumber);
+        })
+        .catch((e: any) => {
+          reject(e);
+        });
+    });
   }
 
   getContainerId(): string {
@@ -145,29 +152,10 @@ export class PluginInstanceContainerController implements IContainerController {
               this.callerInstance.getInstallationPath(),
               this.runScript(),
             )
-              .then(({ processId }: { processId: string }) => {
+              .then(async ({ processId }: { processId: string }) => {
                 this.setStatus("up");
                 this.setContainerId(processId);
-                console.log("\x1b[32m");
-                console.log(
-                  `You can now use these endpoints for auth, registered with auth instance: ${this.callerInstance
-                    .getGraphqlInstance()
-                    .getName()}`,
-                  "\x1b[0m",
-                );
-                const routes = [
-                  {
-                    route: `http://localhost:${this.getPortNumber()}/authentication/signup`,
-                    method: "POST",
-                    params: "name, email, password",
-                  },
-                  {
-                    route: `http://localhost:${this.getPortNumber()}/authentication/signin`,
-                    method: "POST",
-                    params: "email, password",
-                  },
-                ];
-                console.table(routes);
+                await this.print();
                 return resolve(true);
               })
               .catch((e: any) => {
@@ -178,7 +166,30 @@ export class PluginInstanceContainerController implements IContainerController {
             return reject(e);
           });
       });
-    }
+    } else await this.print();
+  }
+
+  async print() {
+    console.log("\x1b[32m");
+    console.log(
+      `You can now use these endpoints for auth, registered with auth instance: ${this.callerInstance
+        .getGraphqlInstance()
+        .getName()}`,
+      "\x1b[0m",
+    );
+    const routes = [
+      {
+        route: `http://localhost:${await this.getPortNumber()}/authentication/signup`,
+        method: "POST",
+        params: "name, email, password",
+      },
+      {
+        route: `http://localhost:${await this.getPortNumber()}/authentication/signin`,
+        method: "POST",
+        params: "email, password",
+      },
+    ];
+    console.table(routes);
   }
 
   async down() {
@@ -187,7 +198,6 @@ export class PluginInstanceContainerController implements IContainerController {
         SpawnHelper.stop(this.getContainerId(), this.callerInstance.getName())
           .then(() => {
             this.setStatus("down");
-
             this.setContainerId(null);
             return resolve(true);
           })

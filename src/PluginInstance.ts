@@ -9,7 +9,7 @@ import IGlueStorePlugin from "@gluestack/framework/types/store/interface/IGluePl
 import IManagesInstances from "@gluestack/framework/types/plugin/interface/IManagesInstances";
 import { IHasGraphqlInstance } from "./interfaces/IHasGraphqlInstance";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
-import { GlueStackPlugin } from "src";
+import { GlueStackPlugin } from "./";
 
 export class PluginInstance
   implements
@@ -38,6 +38,7 @@ export class PluginInstance
     this.callerPlugin = callerPlugin;
     this.gluePluginStore = gluePluginStore;
     this.installationPath = installationPath;
+    //@ts-ignore
     this.containerController = new PluginInstanceContainerController(app, this);
   }
 

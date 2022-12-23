@@ -94,16 +94,26 @@ var PluginInstanceContainerController = (function () {
         return this.status;
     };
     PluginInstanceContainerController.prototype.getPortNumber = function (returnDefault) {
-        if (this.portNumber) {
-            return this.portNumber;
-        }
-        if (returnDefault) {
-            var ports = this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
-            var port = ports.length ? parseInt(ports[ports.length - 1]) + 1 : 6510;
-            ports.push(port);
-            this.callerInstance.callerPlugin.gluePluginStore.set("ports", ports);
-            return port;
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2, new Promise(function (resolve, reject) {
+                        if (_this.portNumber) {
+                            return resolve(_this.portNumber);
+                        }
+                        var ports = _this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
+                        DockerodeHelper.getPort(6670, ports)
+                            .then(function (port) {
+                            _this.setPortNumber(port);
+                            ports.push(port);
+                            _this.callerInstance.callerPlugin.gluePluginStore.set("ports", ports);
+                            return resolve(_this.portNumber);
+                        })["catch"](function (e) {
+                            reject(e);
+                        });
+                    })];
+            });
+        });
     };
     PluginInstanceContainerController.prototype.getContainerId = function () {
         return this.containerId;
@@ -154,26 +164,19 @@ var PluginInstanceContainerController = (function () {
                                     SpawnHelper.start(_this.callerInstance.getInstallationPath(), _this.runScript())
                                         .then(function (_a) {
                                         var processId = _a.processId;
-                                        _this.setStatus("up");
-                                        _this.setContainerId(processId);
-                                        console.log("\x1b[32m");
-                                        console.log("You can now use these endpoints for auth, registered with auth instance: ".concat(_this.callerInstance
-                                            .getGraphqlInstance()
-                                            .getName()), "\x1b[0m");
-                                        var routes = [
-                                            {
-                                                route: "http://localhost:".concat(_this.getPortNumber(), "/authentication/signup"),
-                                                method: "POST",
-                                                params: "name, email, password"
-                                            },
-                                            {
-                                                route: "http://localhost:".concat(_this.getPortNumber(), "/authentication/signin"),
-                                                method: "POST",
-                                                params: "email, password"
-                                            },
-                                        ];
-                                        console.table(routes);
-                                        return resolve(true);
+                                        return __awaiter(_this, void 0, void 0, function () {
+                                            return __generator(this, function (_b) {
+                                                switch (_b.label) {
+                                                    case 0:
+                                                        this.setStatus("up");
+                                                        this.setContainerId(processId);
+                                                        return [4, this.print()];
+                                                    case 1:
+                                                        _b.sent();
+                                                        return [2, resolve(true)];
+                                                }
+                                            });
+                                        });
                                     })["catch"](function (e) {
                                         return reject(e);
                                     });
@@ -185,8 +188,49 @@ var PluginInstanceContainerController = (function () {
                         }); })];
                     case 3:
                         _f.sent();
-                        _f.label = 4;
-                    case 4: return [2];
+                        return [3, 6];
+                    case 4: return [4, this.print()];
+                    case 5:
+                        _f.sent();
+                        _f.label = 6;
+                    case 6: return [2];
+                }
+            });
+        });
+    };
+    PluginInstanceContainerController.prototype.print = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var routes, _a, _b, _c;
+            var _d, _e;
+            return __generator(this, function (_f) {
+                switch (_f.label) {
+                    case 0:
+                        console.log("\x1b[32m");
+                        console.log("You can now use these endpoints for auth, registered with auth instance: ".concat(this.callerInstance
+                            .getGraphqlInstance()
+                            .getName()), "\x1b[0m");
+                        _d = {};
+                        _a = "http://localhost:".concat;
+                        return [4, this.getPortNumber()];
+                    case 1:
+                        _b = [
+                            (_d.route = _a.apply("http://localhost:", [_f.sent(), "/authentication/signup"]),
+                                _d.method = "POST",
+                                _d.params = "name, email, password",
+                                _d)
+                        ];
+                        _e = {};
+                        _c = "http://localhost:".concat;
+                        return [4, this.getPortNumber()];
+                    case 2:
+                        routes = _b.concat([
+                            (_e.route = _c.apply("http://localhost:", [_f.sent(), "/authentication/signin"]),
+                                _e.method = "POST",
+                                _e.params = "email, password",
+                                _e)
+                        ]);
+                        console.table(routes);
+                        return [2];
                 }
             });
         });

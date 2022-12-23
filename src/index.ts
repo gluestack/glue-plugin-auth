@@ -96,7 +96,10 @@ export class GlueStackPlugin
       this.getTemplateFolderPath(),
       target,
     );
-    await attachGraphqlInstance(authInstance, graphqlInstances);
+    if (authInstance) {
+      await attachGraphqlInstance(authInstance, graphqlInstances);
+      await authInstance.getContainerController().up();
+    }
   }
 
   createInstance(
