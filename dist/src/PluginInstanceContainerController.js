@@ -102,7 +102,7 @@ var PluginInstanceContainerController = (function () {
                             return resolve(_this.portNumber);
                         }
                         var ports = _this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
-                        DockerodeHelper.getPort(6670, ports)
+                        DockerodeHelper.getPort(9000, ports)
                             .then(function (port) {
                             _this.setPortNumber(port);
                             ports.push(port);
@@ -137,18 +137,7 @@ var PluginInstanceContainerController = (function () {
             var _this = this;
             return __generator(this, function (_f) {
                 switch (_f.label) {
-                    case 0:
-                        if (!(this.getStatus() !== "up")) return [3, 4];
-                        if (!this.callerInstance.getGraphqlInstance()) {
-                            throw new Error("No graphql  attached with ".concat(this.callerInstance.getName()));
-                        }
-                        if (!((_a = this.callerInstance.getGraphqlInstance()) === null || _a === void 0 ? void 0 : _a.getContainerController())) {
-                            throw new Error("Not a valid graphql instance configured with ".concat(this.callerInstance.getName()));
-                        }
-                        if (!(((_c = (_b = this.callerInstance
-                            .getGraphqlInstance()) === null || _b === void 0 ? void 0 : _b.getContainerController()) === null || _c === void 0 ? void 0 : _c.getStatus()) !== "up")) return [3, 2];
-                        return [4, ((_e = (_d = this.callerInstance
-                                .getGraphqlInstance()) === null || _d === void 0 ? void 0 : _d.getContainerController()) === null || _e === void 0 ? void 0 : _e.up())];
+                    case 0: return [2];
                     case 1:
                         _f.sent();
                         _f.label = 2;
@@ -240,22 +229,7 @@ var PluginInstanceContainerController = (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        if (!(this.getStatus() !== "down")) return [3, 2];
-                        return [4, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-                                var _this = this;
-                                return __generator(this, function (_a) {
-                                    SpawnHelper.stop(this.getContainerId(), this.callerInstance.getName())
-                                        .then(function () {
-                                        _this.setStatus("down");
-                                        _this.setContainerId(null);
-                                        return resolve(true);
-                                    })["catch"](function (e) {
-                                        return reject(e);
-                                    });
-                                    return [2];
-                                });
-                            }); })];
+                    case 0: return [2];
                     case 1:
                         _a.sent();
                         _a.label = 2;

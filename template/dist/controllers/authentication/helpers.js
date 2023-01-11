@@ -21,17 +21,23 @@ class Helpers {
             const tokenContents = {
                 id: _payload.id.toString(),
                 role: _payload.role,
+                "https://hasura.io/jwt/claims": {
+                    "x-hasura-allowed-roles": [_payload.role],
+                    "x-hasura-default-role": _payload.role,
+                    "x-hasura-user-id": _payload.id.toString()
+                }
             };
             const token = jwt.sign(tokenContents, locals_1.default.config().jwtSecret, {
                 algorithm: locals_1.default.config().jwtKey,
                 expiresIn: expires_in,
             });
+            console.log(token);
             return {
                 token,
-                expires_in
+                expires_in,
             };
         });
     }
 }
-exports.default = new Helpers;
+exports.default = new Helpers();
 //# sourceMappingURL=helpers.js.map

@@ -35,11 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.attachGraphqlInstance = exports.setGraphqlConfig = void 0;
 var prompts = require("prompts");
 var writeEnv_1 = require("./helpers/writeEnv");
-var writeMigrations_1 = require("./helpers/writeMigrations");
+var copyToGraphql_1 = require("./helpers/copyToGraphql");
+var reWriteFile_1 = __importDefault(require("./helpers/reWriteFile"));
+var replaceSpecialChars_1 = require("./helpers/replaceSpecialChars");
 var setGraphqlConfig = function (authInstance, graphqlInstance) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         authInstance.gluePluginStore.set("graphql_instance", graphqlInstance.getName());
@@ -64,7 +69,7 @@ function selectGraphqlInstance(graphqlInstances) {
                     return [4, prompts({
                             type: "select",
                             name: "value",
-                            message: "Select an graphqlInstance",
+                            message: "Select a graphql instance",
                             choices: choices
                         })];
                 case 1:
@@ -76,37 +81,28 @@ function selectGraphqlInstance(graphqlInstances) {
 }
 function attachGraphqlInstance(authInstance, graphqlInstances) {
     return __awaiter(this, void 0, void 0, function () {
-        var graphqlInstance, trackJson;
+        var graphqlInstance, routerFilePath;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4, selectGraphqlInstance(graphqlInstances)];
                 case 1:
                     graphqlInstance = _a.sent();
-                    if (!graphqlInstance) return [3, 7];
+                    if (!graphqlInstance) return [3, 6];
                     return [4, (0, exports.setGraphqlConfig)(authInstance, graphqlInstance)];
                 case 2:
                     _a.sent();
                     return [4, (0, writeEnv_1.writeEnv)(authInstance, graphqlInstance)];
                 case 3:
                     _a.sent();
-                    return [4, (0, writeMigrations_1.writeMigrations)(authInstance, graphqlInstance)];
+                    return [4, (0, copyToGraphql_1.copyToGraphql)(authInstance, graphqlInstance)];
                 case 4:
                     _a.sent();
-                    return [4, graphqlInstance.applyMigration()];
+                    routerFilePath = "".concat(authInstance.getInstallationPath(), "/router.js");
+                    return [4, (0, reWriteFile_1["default"])(routerFilePath, (0, replaceSpecialChars_1.replaceSpecialChars)(authInstance.getName()), "functions")];
                 case 5:
                     _a.sent();
-                    trackJson = {
-                        type: "pg_track_table",
-                        args: {
-                            source: graphqlInstance.getDbName(),
-                            table: "users"
-                        }
-                    };
-                    return [4, graphqlInstance.requestMetadata(trackJson)];
-                case 6:
-                    _a.sent();
-                    _a.label = 7;
-                case 7: return [2];
+                    _a.label = 6;
+                case 6: return [2];
             }
         });
     });

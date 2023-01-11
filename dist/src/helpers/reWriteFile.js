@@ -35,20 +35,43 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-exports.writeMigrations = void 0;
-var copyToTarget_1 = require("./copyToTarget");
-function writeMigrations(authInstance, graphqlInstance) {
-    return __awaiter(this, void 0, void 0, function () {
+var fs_1 = __importDefault(require("fs"));
+var util_1 = __importDefault(require("util"));
+var readFile = util_1["default"].promisify(fs_1["default"].readFile);
+var writeFile = util_1["default"].promisify(fs_1["default"].writeFile);
+var reWriteFile = function (filePath, instanceName, defaultVar) {
+    if (defaultVar === void 0) { defaultVar = 'functions'; }
+    return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, (0, copyToTarget_1.copyToTarget)(authInstance.callerPlugin.getMigrationFolderPath(), graphqlInstance.getMigrationFolderPath())];
-                case 1:
-                    _a.sent();
-                    return [2];
-            }
+            return [2, new Promise(function (resolve, reject) { return __awaiter(void 0, void 0, void 0, function () {
+                    var data, err_1;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                _a.trys.push([0, 3, , 4]);
+                                return [4, readFile(filePath, "utf8")];
+                            case 1:
+                                data = _a.sent();
+                                data = data.replaceAll(defaultVar, instanceName);
+                                return [4, writeFile(filePath, data)];
+                            case 2:
+                                _a.sent();
+                                resolve('done');
+                                return [3, 4];
+                            case 3:
+                                err_1 = _a.sent();
+                                reject(err_1);
+                                return [3, 4];
+                            case 4: return [2];
+                        }
+                    });
+                }); })];
         });
     });
-}
-exports.writeMigrations = writeMigrations;
-//# sourceMappingURL=writeMigrations.js.map
+};
+exports["default"] = reWriteFile;
+//# sourceMappingURL=reWriteFile.js.map

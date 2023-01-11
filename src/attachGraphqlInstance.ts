@@ -3,7 +3,9 @@ import { PluginInstance } from "./PluginInstance";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
 import { writeEnv } from "./helpers/writeEnv";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
-import { writeMigrations } from "./helpers/writeMigrations";
+import { copyToGraphql } from "./helpers/copyToGraphql";
+import reWriteFile from "./helpers/reWriteFile";
+import { replaceSpecialChars } from "./helpers/replaceSpecialChars";
 
 export const setGraphqlConfig = async (
   authInstance: PluginInstance,
@@ -28,7 +30,7 @@ async function selectGraphqlInstance(graphqlInstances: IInstance[]) {
   const { value } = await prompts({
     type: "select",
     name: "value",
-    message: "Select an graphqlInstance",
+    message: "Select a graphql instance",
     choices: choices,
   });
 
@@ -45,17 +47,12 @@ export async function attachGraphqlInstance(
   if (graphqlInstance) {
     await setGraphqlConfig(authInstance, graphqlInstance);
     await writeEnv(authInstance, graphqlInstance);
-    await writeMigrations(authInstance, graphqlInstance);
-    await graphqlInstance.applyMigration();
-
-    const trackJson = {
-      type: "pg_track_table",
-      args: {
-        source: graphqlInstance.getDbName(),
-        table: "users",
-      },
-    };
-
-    await graphqlInstance.requestMetadata(trackJson);
+    await copyToGraphql(authInstance, graphqlInstance);
+    const routerFilePath = `${authInstance.getInstallationPath()}/router.js`;
+    await reWriteFile(
+      routerFilePath,
+      replaceSpecialChars(authInstance.getName()),
+      "functions",
+    );
   }
 }

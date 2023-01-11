@@ -89,26 +89,22 @@ var GlueStackPlugin = (function () {
                         graphqlPlugin
                             .getInstances()
                             .map(function (graphqlInstance) {
-                            if (graphqlInstance.getContainerController().getStatus() === "up" &&
-                                !graphqlInstance.gluePluginStore.get("auth_instance")) {
+                            if (!graphqlInstance.gluePluginStore.get("auth_instance")) {
                                 graphqlInstances.push(graphqlInstance);
                             }
                         });
                         if (!graphqlInstances.length) {
-                            throw new Error("There is no graphql instance up where auth plugin can be installed");
+                            throw new Error("There is no graphql instance where auth plugin can be installed");
                         }
                         return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
                     case 1:
                         authInstance = _a.sent();
-                        if (!authInstance) return [3, 4];
+                        if (!authInstance) return [3, 3];
                         return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
                     case 2:
                         _a.sent();
-                        return [4, authInstance.getContainerController().up()];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
-                    case 4: return [2];
+                        _a.label = 3;
+                    case 3: return [2];
                 }
             });
         });

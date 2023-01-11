@@ -78,7 +78,6 @@ export class GlueStackPlugin
       .getInstances()
       .map((graphqlInstance: GraphqlPluginInstance) => {
         if (
-          graphqlInstance.getContainerController().getStatus() === "up" &&
           !graphqlInstance.gluePluginStore.get("auth_instance")
         ) {
           graphqlInstances.push(graphqlInstance);
@@ -86,7 +85,7 @@ export class GlueStackPlugin
       });
     if (!graphqlInstances.length) {
       throw new Error(
-        "There is no graphql instance up where auth plugin can be installed",
+        "There is no graphql instance where auth plugin can be installed",
       );
     }
 
@@ -98,7 +97,6 @@ export class GlueStackPlugin
     );
     if (authInstance) {
       await attachGraphqlInstance(authInstance, graphqlInstances);
-      await authInstance.getContainerController().up();
     }
   }
 

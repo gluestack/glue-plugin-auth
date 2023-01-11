@@ -1,5 +1,5 @@
-import * as jwt from 'jsonwebtoken';
-import Locals from '../../providers/locals';
+import * as jwt from "jsonwebtoken";
+import Locals from "../../providers/locals";
 
 class Helpers {
   /**
@@ -11,18 +11,24 @@ class Helpers {
     const tokenContents = {
       id: _payload.id.toString(),
       role: _payload.role,
+      "https://hasura.io/jwt/claims": {
+        "x-hasura-allowed-roles": [_payload.role],
+        "x-hasura-default-role": _payload.role,
+        "x-hasura-user-id": _payload.id.toString()
+      }
     };
 
     const token = jwt.sign(tokenContents, Locals.config().jwtSecret, {
       algorithm: Locals.config().jwtKey,
       expiresIn: expires_in,
     });
+    console.log(token);
 
     return {
       token,
-      expires_in
+      expires_in,
     };
   }
 }
 
-export default new Helpers;
+export default new Helpers();
