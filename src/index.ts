@@ -76,7 +76,7 @@ export class GlueStackPlugin
     const graphqlInstances: GraphqlPluginInstance[] = [];
     graphqlPlugin
       .getInstances()
-      .map((graphqlInstance: GraphqlPluginInstance) => {
+      .forEach((graphqlInstance: GraphqlPluginInstance) => {
         if (
           !graphqlInstance.gluePluginStore.get("auth_instance")
         ) {

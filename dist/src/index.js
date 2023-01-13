@@ -88,7 +88,7 @@ var GlueStackPlugin = (function () {
                         graphqlInstances = [];
                         graphqlPlugin
                             .getInstances()
-                            .map(function (graphqlInstance) {
+                            .forEach(function (graphqlInstance) {
                             if (!graphqlInstance.gluePluginStore.get("auth_instance")) {
                                 graphqlInstances.push(graphqlInstance);
                             }

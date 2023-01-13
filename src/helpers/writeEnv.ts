@@ -29,6 +29,7 @@ export async function constructEnvFromJson(
     HASURA_GRAPHQL_JWT_SECRET: jwt_config.key,
     HASURA_GRAPHQL_JWT_KEY: jwt_config.type,
     APP_PORT: await authInstance.getContainerController().getPortNumber(),
+    GLUE_PUBLIC: "true"
   };
 
   return keys;

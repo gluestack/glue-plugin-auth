@@ -91,6 +91,7 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                     return [4, authInstance.getContainerController().getPortNumber()];
                 case 2:
                     keys = (_a.APP_PORT = _b.sent(),
+                        _a.GLUE_PUBLIC = "true",
                         _a);
                     return [2, keys];
             }
