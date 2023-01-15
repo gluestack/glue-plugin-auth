@@ -22,7 +22,6 @@ class Helpers {
       algorithm: Locals.config().jwtKey,
       expiresIn: expires_in,
     });
-    console.log(token);
 
     return {
       token,

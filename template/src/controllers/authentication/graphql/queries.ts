@@ -9,6 +9,15 @@ class Queries {
       updated_at
     }
   }`;
+  public User = `query me {
+    users {
+      id
+      name
+      email
+      created_at
+      updated_at
+    }
+  }`;
 }
 
 export default new Queries();

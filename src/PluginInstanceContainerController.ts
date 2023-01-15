@@ -65,6 +65,11 @@ export class PluginInstanceContainerController implements IContainerController {
       if (this.portNumber) {
         return resolve(this.portNumber);
       }
+      const port = 9000;
+      this.setPortNumber(port);
+      return resolve(this.portNumber);
+
+      /*
       let ports =
         this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
       DockerodeHelper.getPort(9000, ports)
@@ -77,6 +82,7 @@ export class PluginInstanceContainerController implements IContainerController {
         .catch((e: any) => {
           reject(e);
         });
+        */
     });
   }
 
@@ -105,7 +111,7 @@ export class PluginInstanceContainerController implements IContainerController {
   getConfig(): any {}
 
   async up() {
-    return
+    return;
     if (this.getStatus() !== "up") {
       if (!this.callerInstance.getGraphqlInstance()) {
         throw new Error(

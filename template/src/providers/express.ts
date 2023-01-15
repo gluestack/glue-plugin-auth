@@ -1,6 +1,7 @@
 import * as express from "express";
 import Locals from "./locals";
 import Routes from "./routes";
+const session = require('express-session');
 
 class Express {
   /**
@@ -30,6 +31,9 @@ class Express {
    */
   private mountRoutes(): void {
     this.express.use(express.json());
+    this.express.use(session({ secret: 'app-secret' }));
+    this.express.engine("html", require("ejs").renderFile);
+    this.express.set('view engine', 'html');
     this.express = Routes.authentication(this.express);
   }
 

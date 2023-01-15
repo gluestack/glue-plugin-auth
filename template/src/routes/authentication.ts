@@ -1,7 +1,9 @@
 import { Router } from "express";
+import passport from "../providers/passport";
 
 // Others
 import Controller from "../controllers/authentication/handlers";
+import Locals from "../providers/locals";
 
 const router = Router();
 
@@ -10,5 +12,22 @@ const router = Router();
  */
 router.post("/signin", Controller.signin);
 router.post("/signup", Controller.signup);
+router.get("/me", Controller.user);
+
+for (const provider of Locals.config().providers) {
+  router.get(
+    `/signin/${provider}`,
+      passport.authenticate(provider)
+  );
+  router.get(
+    `/signin/${provider}/callback`,
+    passport.authenticate(provider, {
+      successRedirect: `/authentication/signin/${provider}/callback/success`,
+      failureRedirect: `/authentication/signin/${provider}/callback/failure`,
+    })
+  );
+  router.get(`/signin/${provider}/callback/success`, Controller.socialSigninSuccess);
+  router.get(`/signin/${provider}/callback/failure`, Controller.socialSigninFailure);
+}
 
 export default router;
