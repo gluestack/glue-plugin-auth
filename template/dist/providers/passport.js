@@ -14,7 +14,7 @@ passport.deserializeUser((user, done) => {
 passport.use(new passport_google_oidc_1.Strategy({
     clientID: locals_1.default.config().googleClientId,
     clientSecret: locals_1.default.config().googleClientSecret,
-    callbackURL: "/authentication/signin/google/callback",
+    callbackURL: locals_1.default.config().googleCallbackUrl,
     scope: ["email"],
 }, (req, profile, issuer, done) => {
     var _a;
@@ -23,7 +23,7 @@ passport.use(new passport_google_oidc_1.Strategy({
 passport.use(new passport_microsoft_1.Strategy({
     clientID: locals_1.default.config().microsoftClientId,
     clientSecret: locals_1.default.config().microsoftClientSecret,
-    callbackURL: "/authentication/signin/microsoft/callback",
+    callbackURL: locals_1.default.config().microsoftCallbackUrl,
     scope: ["user.read"],
 }, (req, issuer, profile, done) => {
     var _a;
@@ -32,7 +32,7 @@ passport.use(new passport_microsoft_1.Strategy({
 passport.use(new passport_github2_1.Strategy({
     clientID: locals_1.default.config().githubClientId,
     clientSecret: locals_1.default.config().githubClientSecret,
-    callbackURL: "/authentication/signin/github/callback",
+    callbackURL: locals_1.default.config().githubCallbackUrl,
     scope: ["user:email"],
 }, (req, issuer, profile, done) => {
     var _a;

@@ -17,7 +17,7 @@ passport.use(
     {
       clientID: Locals.config().googleClientId,
       clientSecret: Locals.config().googleClientSecret,
-      callbackURL: "/authentication/signin/google/callback",
+      callbackURL: Locals.config().googleCallbackUrl,
       scope: ["email"],
     },
     (req, profile, issuer, done) => {
@@ -31,7 +31,7 @@ passport.use(
     {
       clientID: Locals.config().microsoftClientId,
       clientSecret: Locals.config().microsoftClientSecret,
-      callbackURL: "/authentication/signin/microsoft/callback",
+      callbackURL: Locals.config().microsoftCallbackUrl,
       scope: ["user.read"],
     },
     (req, issuer, profile, done) => {
@@ -45,7 +45,7 @@ passport.use(
     {
       clientID: Locals.config().githubClientId,
       clientSecret: Locals.config().githubClientSecret,
-      callbackURL: "/authentication/signin/github/callback",
+      callbackURL: Locals.config().githubCallbackUrl,
       scope: ["user:email"],
     },
     (req, issuer, profile, done) => {

@@ -23,10 +23,13 @@ export async function constructEnvFromJson(
     //
     AUTH_GOOGLE_CLIENT_ID: "",
     AUTH_GOOGLE_CLIENT_SECRET: "",
+    AUTH_GOOGLE_CALLBACK_URL: "",
     AUTH_MICROSOFT_CLIENT_ID: "",
     AUTH_MICROSOFT_CLIENT_SECRET: "",
+    AUTH_MICROSOFT_CALLBACK_URL: "",
     AUTH_GITHUB_CLIENT_ID: "",
     AUTH_GITHUB_CLIENT_SECRET: "",
+    AUTH_GITHUB_CALLBACK_URL: "",
   };
 
   return keys;

@@ -19,10 +19,13 @@ class Locals {
         const jwtKey = process.env.HASURA_GRAPHQL_JWT_KEY || "";
         const googleClientId = process.env.AUTH_GOOGLE_CLIENT_ID || "";
         const googleClientSecret = process.env.AUTH_GOOGLE_CLIENT_SECRET || "";
+        const googleCallbackUrl = process.env.AUTH_GOOGLE_CALLBACK_URL || "";
         const microsoftClientId = process.env.AUTH_MICROSOFT_CLIENT_ID || "";
         const microsoftClientSecret = process.env.AUTH_MICROSOFT_CLIENT_SECRET || "";
+        const microsoftCallbackUrl = process.env.AUTH_MICROSOFT_CALLBACK_URL || "";
         const githubClientId = process.env.AUTH_GITHUB_CLIENT_ID || "";
         const githubClientSecret = process.env.AUTH_GITHUB_CLIENT_SECRET || "";
+        const githubCallbackUrl = process.env.AUTH_GITHUB_CALLBACK_URL || "";
         const providers = [
             "google",
             "microsoft",
@@ -42,12 +45,15 @@ class Locals {
             //google
             googleClientId,
             googleClientSecret,
+            googleCallbackUrl,
             //microsoft
             microsoftClientId,
             microsoftClientSecret,
+            microsoftCallbackUrl,
             //github
             githubClientId,
             githubClientSecret,
+            githubCallbackUrl,
         };
     }
     /**

@@ -84,10 +84,13 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                         _a.HASURA_GRAPHQL_USER_ROLE = "user",
                         _a.AUTH_GOOGLE_CLIENT_ID = "",
                         _a.AUTH_GOOGLE_CLIENT_SECRET = "",
+                        _a.AUTH_GOOGLE_CALLBACK_URL = "",
                         _a.AUTH_MICROSOFT_CLIENT_ID = "",
                         _a.AUTH_MICROSOFT_CLIENT_SECRET = "",
+                        _a.AUTH_MICROSOFT_CALLBACK_URL = "",
                         _a.AUTH_GITHUB_CLIENT_ID = "",
                         _a.AUTH_GITHUB_CLIENT_SECRET = "",
+                        _a.AUTH_GITHUB_CALLBACK_URL = "",
                         _a);
                     return [2, keys];
             }
