@@ -18,8 +18,8 @@ export async function constructEnvFromJson(
       json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
     HASURA_GRAPHQL_URL: graphqlInstance.getGraphqlURL(),
     HASURA_GRAPHQL_ADMIN_SECRET: json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
-    HASURA_GRAPHQL_JWT_SECRET: json["JWT_KEY"],
-    HASURA_GRAPHQL_JWT_KEY: json["JWT_SECRET"],
+    HASURA_GRAPHQL_JWT_SECRET: json["JWT_SECRET"],
+    HASURA_GRAPHQL_JWT_KEY: json["JWT_KEY"],
     HASURA_GRAPHQL_USER_ROLE: "user",
     //
     AUTH_GOOGLE_CLIENT_ID: "",
