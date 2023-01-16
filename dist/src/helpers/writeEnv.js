@@ -74,6 +74,7 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                     return [4, authInstance.getContainerController().getPortNumber()];
                 case 2:
                     keys = (_a.APP_PORT = _b.sent(),
+                        _a.APP_ID = authInstance.getName(),
                         _a.AUTH_TOKEN_EXPIRES_IN = "7D",
                         _a.RESET_PASSWORD_EXPIRES_IN = "24H",
                         _a.HASURA_GRAPHQL_UNAUTHORIZED_ROLE = json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
@@ -84,13 +85,10 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                         _a.HASURA_GRAPHQL_USER_ROLE = "user",
                         _a.AUTH_GOOGLE_CLIENT_ID = "",
                         _a.AUTH_GOOGLE_CLIENT_SECRET = "",
-                        _a.AUTH_GOOGLE_CALLBACK_URL = "",
                         _a.AUTH_MICROSOFT_CLIENT_ID = "",
                         _a.AUTH_MICROSOFT_CLIENT_SECRET = "",
-                        _a.AUTH_MICROSOFT_CALLBACK_URL = "",
                         _a.AUTH_GITHUB_CLIENT_ID = "",
                         _a.AUTH_GITHUB_CLIENT_SECRET = "",
-                        _a.AUTH_GITHUB_CALLBACK_URL = "",
                         _a);
                     return [2, keys];
             }

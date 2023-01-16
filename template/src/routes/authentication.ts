@@ -22,8 +22,8 @@ for (const provider of Locals.config().providers) {
   router.get(
     `/signin/${provider}/callback`,
     passport.authenticate(provider, {
-      successRedirect: `/authentication/signin/${provider}/callback/success`,
-      failureRedirect: `/authentication/signin/${provider}/callback/failure`,
+      successRedirect: `/backend/${Locals.config().appId}/authentication/signin/${provider}/callback/success`,
+      failureRedirect: `/backend/${Locals.config().appId}/authentication/signin/${provider}/callback/failure`,
     })
   );
   router.get(`/signin/${provider}/callback/success`, Controller.socialSigninSuccess);

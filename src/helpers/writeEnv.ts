@@ -10,6 +10,7 @@ export async function constructEnvFromJson(
   const json = await graphqlInstance.getContainerController().getEnv();
   const keys: any = {
     APP_PORT: await authInstance.getContainerController().getPortNumber(),
+    APP_ID: authInstance.getName(),
     AUTH_TOKEN_EXPIRES_IN: "7D",
     RESET_PASSWORD_EXPIRES_IN: "24H",
     //
@@ -23,13 +24,10 @@ export async function constructEnvFromJson(
     //
     AUTH_GOOGLE_CLIENT_ID: "",
     AUTH_GOOGLE_CLIENT_SECRET: "",
-    AUTH_GOOGLE_CALLBACK_URL: "",
     AUTH_MICROSOFT_CLIENT_ID: "",
     AUTH_MICROSOFT_CLIENT_SECRET: "",
-    AUTH_MICROSOFT_CALLBACK_URL: "",
     AUTH_GITHUB_CLIENT_ID: "",
     AUTH_GITHUB_CLIENT_SECRET: "",
-    AUTH_GITHUB_CALLBACK_URL: "",
   };
 
   return keys;

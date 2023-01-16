@@ -10,6 +10,7 @@ class Locals {
     dotenv.config({ path: path.join(__dirname, "../../.env") });
 
     const port = process.env.APP_PORT || "";
+    const appId = process.env.APP_ID || "";
     const authTokenExpiresIn = process.env.AUTH_TOKEN_EXPIRES_IN || "7D";
     const resetPasswordExpiresIn =
       process.env.RESET_PASSWORD_EXPIRES_IN || "24H";
@@ -25,15 +26,12 @@ class Locals {
 
     const googleClientId = process.env.AUTH_GOOGLE_CLIENT_ID || "";
     const googleClientSecret = process.env.AUTH_GOOGLE_CLIENT_SECRET || "";
-    const googleCallbackUrl = process.env.AUTH_GOOGLE_CALLBACK_URL || "";
 
     const microsoftClientId = process.env.AUTH_MICROSOFT_CLIENT_ID || "";
     const microsoftClientSecret = process.env.AUTH_MICROSOFT_CLIENT_SECRET || "";
-    const microsoftCallbackUrl = process.env.AUTH_MICROSOFT_CALLBACK_URL || "";
 
     const githubClientId = process.env.AUTH_GITHUB_CLIENT_ID || "";
     const githubClientSecret = process.env.AUTH_GITHUB_CLIENT_SECRET || "";
-    const githubCallbackUrl = process.env.AUTH_GITHUB_CALLBACK_URL || "";
 
     const providers =  [
       "google",
@@ -43,6 +41,7 @@ class Locals {
 
     return {
       port,
+      appId,
       authTokenExpiresIn,
       resetPasswordExpiresIn,
       hasuraGraphqlUnauthorizedRole,
@@ -55,15 +54,12 @@ class Locals {
       //google
       googleClientId,
       googleClientSecret,
-      googleCallbackUrl,
       //microsoft
       microsoftClientId,
       microsoftClientSecret,
-      microsoftCallbackUrl,
       //github
       githubClientId,
       githubClientSecret,
-      githubCallbackUrl,
     };
   }
 

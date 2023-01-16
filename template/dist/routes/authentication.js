@@ -15,8 +15,8 @@ router.get("/me", handlers_1.default.user);
 for (const provider of locals_1.default.config().providers) {
     router.get(`/signin/${provider}`, passport_1.default.authenticate(provider));
     router.get(`/signin/${provider}/callback`, passport_1.default.authenticate(provider, {
-        successRedirect: `/authentication/signin/${provider}/callback/success`,
-        failureRedirect: `/authentication/signin/${provider}/callback/failure`,
+        successRedirect: `/backend/${locals_1.default.config().appId}/authentication/signin/${provider}/callback/success`,
+        failureRedirect: `/backend/${locals_1.default.config().appId}/authentication/signin/${provider}/callback/failure`,
     }));
     router.get(`/signin/${provider}/callback/success`, handlers_1.default.socialSigninSuccess);
     router.get(`/signin/${provider}/callback/failure`, handlers_1.default.socialSigninFailure);

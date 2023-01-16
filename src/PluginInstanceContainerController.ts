@@ -65,7 +65,7 @@ export class PluginInstanceContainerController implements IContainerController {
       if (this.portNumber) {
         return resolve(this.portNumber);
       }
-      const port = 9000;
+      const port = 9090;
       this.setPortNumber(port);
       return resolve(this.portNumber);
 
