@@ -61,37 +61,35 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.writeEnv = exports.constructEnvFromJson = void 0;
 var fs = __importStar(require("fs"));
+var replaceSpecialChars_1 = require("./replaceSpecialChars");
 function constructEnvFromJson(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
-        var json, jwt_config, keys;
+        var json, keys;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4, graphqlInstance.getContainerController().getEnv()];
                 case 1:
                     json = _b.sent();
-                    jwt_config = {
-                        type: "",
-                        key: ""
-                    };
-                    try {
-                        jwt_config = JSON.parse(json["HASURA_GRAPHQL_JWT_SECRET"]);
-                    }
-                    catch (e) {
-                    }
-                    _a = {
-                        AUTH_TOKEN_EXPIRES_IN: "7D",
-                        RESET_PASSWORD_EXPIRES_IN: "24H",
-                        HASURA_GRAPHQL_UNAUTHORIZED_ROLE: json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
-                        HASURA_GRAPHQL_URL: graphqlInstance.getGraphqlURL(),
-                        HASURA_GRAPHQL_ADMIN_SECRET: json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
-                        HASURA_GRAPHQL_JWT_SECRET: jwt_config.key,
-                        HASURA_GRAPHQL_JWT_KEY: jwt_config.type
-                    };
+                    _a = {};
                     return [4, authInstance.getContainerController().getPortNumber()];
                 case 2:
                     keys = (_a.APP_PORT = _b.sent(),
-                        _a.GLUE_PUBLIC = "true",
+                        _a.APP_ID = (0, replaceSpecialChars_1.replaceSpecialChars)(authInstance.getName()),
+                        _a.AUTH_TOKEN_EXPIRES_IN = "7D",
+                        _a.RESET_PASSWORD_EXPIRES_IN = "24H",
+                        _a.HASURA_GRAPHQL_UNAUTHORIZED_ROLE = json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
+                        _a.HASURA_GRAPHQL_URL = graphqlInstance.getGraphqlURL(),
+                        _a.HASURA_GRAPHQL_ADMIN_SECRET = json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
+                        _a.HASURA_GRAPHQL_JWT_SECRET = json["JWT_SECRET"],
+                        _a.HASURA_GRAPHQL_JWT_KEY = json["JWT_KEY"],
+                        _a.HASURA_GRAPHQL_USER_ROLE = "user",
+                        _a.AUTH_GOOGLE_CLIENT_ID = "",
+                        _a.AUTH_GOOGLE_CLIENT_SECRET = "",
+                        _a.AUTH_MICROSOFT_CLIENT_ID = "",
+                        _a.AUTH_MICROSOFT_CLIENT_SECRET = "",
+                        _a.AUTH_GITHUB_CLIENT_ID = "",
+                        _a.AUTH_GITHUB_CLIENT_SECRET = "",
                         _a);
                     return [2, keys];
             }

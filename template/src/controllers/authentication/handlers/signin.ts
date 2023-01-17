@@ -2,6 +2,7 @@ import * as bcrypt from "bcrypt";
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Queries from "../graphql/queries";
+import Locals from "../../../providers/locals";
 
 class Signin {
   public static async handle(req: any, res: any): Promise<void> {
@@ -42,7 +43,7 @@ class Signin {
       // create Token for authentication
       const token = await Helpers.CreateToken({
         id: data.data.users[0].id,
-        role: "guest",
+        role: Locals.config().hasuraGraphqlUserRole,
       });
 
       return res.json({

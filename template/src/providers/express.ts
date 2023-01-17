@@ -1,6 +1,7 @@
 import * as express from "express";
 import Locals from "./locals";
 import Routes from "./routes";
+const session = require('express-session');
 
 class Express {
   /**
@@ -16,6 +17,15 @@ class Express {
 
     this.mountDotEnv();
     this.mountRoutes();
+    
+    this.express.use(function (req:any, res:any, next:any) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept",
+      );
+      next();
+    });
   }
 
   /**
@@ -30,6 +40,9 @@ class Express {
    */
   private mountRoutes(): void {
     this.express.use(express.json());
+    this.express.use(session({ secret: 'app-secret' }));
+    this.express.engine("html", require("ejs").renderFile);
+    this.express.set('view engine', 'html');
     this.express = Routes.authentication(this.express);
   }
 

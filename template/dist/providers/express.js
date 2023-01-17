@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const locals_1 = require("./locals");
 const routes_1 = require("./routes");
+const session = require('express-session');
 class Express {
     /**
      * Initialize the express server
@@ -11,6 +12,11 @@ class Express {
         this.express = express();
         this.mountDotEnv();
         this.mountRoutes();
+        this.express.use(function (req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
+        });
     }
     /**
      * Mount envirements variables
@@ -23,6 +29,9 @@ class Express {
      */
     mountRoutes() {
         this.express.use(express.json());
+        this.express.use(session({ secret: 'app-secret' }));
+        this.express.engine("html", require("ejs").renderFile);
+        this.express.set('view engine', 'html');
         this.express = routes_1.default.authentication(this.express);
     }
     /**

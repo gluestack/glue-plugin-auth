@@ -12,6 +12,15 @@ class Queries {
       updated_at
     }
   }`;
+        this.User = `query me {
+    users {
+      id
+      name
+      email
+      created_at
+      updated_at
+    }
+  }`;
     }
 }
 exports.default = new Queries();

@@ -9,51 +9,49 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt = require("bcrypt");
 const commons_1 = require("../../commons");
 const helpers_1 = require("../helpers");
 const queries_1 = require("../graphql/queries");
 const locals_1 = require("../../../providers/locals");
 class Signin {
-    static handle(req, res) {
+    static success(req, res) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const { email, password } = req.body.input || req.body;
+            const { user } = ((_a = req === null || req === void 0 ? void 0 : req.session) === null || _a === void 0 ? void 0 : _a.passport) || { user: null };
+            if (!user)
+                return res.redirect("/authentication/signin/google/callback/failure");
             try {
-                // graphql query
                 const { data } = yield commons_1.default.GQLRequest({
-                    variables: { email: email.toLowerCase() },
+                    variables: { email: user.toLowerCase() },
                     query: queries_1.default.UserByEmail,
                 });
                 // error handling
-                if (!data || !data.data || !data.data.users) {
-                    const error = (data.errors && data.errors) || "Something went wrong!";
-                    return commons_1.default.Response(res, false, error, null);
-                }
-                // check if users response is empty
-                if (data.data.users.length === 0) {
-                    return commons_1.default.Response(res, false, "no user registered with this email address", null);
-                }
-                // check password with the hashed password
-                const validPassword = yield bcrypt.compare(password, data.data.users[0].password);
-                if (!validPassword) {
-                    return commons_1.default.Response(res, false, "Invalid Password", null);
+                if (!data ||
+                    !data.data ||
+                    !data.data.users ||
+                    data.data.users.length === 0) {
+                    return res.json({});
                 }
                 // create Token for authentication
                 const token = yield helpers_1.default.CreateToken({
                     id: data.data.users[0].id,
                     role: locals_1.default.config().hasuraGraphqlUserRole,
                 });
-                return res.json({
-                    success: true,
-                    message: "Sign in successfully!",
-                    data: Object.assign({ id: data.data.users[0].id, name: data.data.users[0].name, email: data.data.users[0].email, created_at: data.data.users[0].created_at, updated_at: data.data.users[0].updated_at }, token),
+                return res.render("token", {
+                    user: user,
+                    token: token.token,
                 });
             }
-            catch (error) {
-                return commons_1.default.Response(res, false, error.message, null);
+            catch (e) {
+                return res.json({ error: e.message, user: user });
             }
+        });
+    }
+    static failure(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            res.send("Error");
         });
     }
 }
 exports.default = Signin;
-//# sourceMappingURL=signin.js.map
+//# sourceMappingURL=socialSignin.js.map
