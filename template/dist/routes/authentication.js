@@ -12,6 +12,7 @@ const router = (0, express_1.Router)();
 router.post("/signin", handlers_1.default.signin);
 router.post("/signup", handlers_1.default.signup);
 router.get("/me", handlers_1.default.user);
+router.post("/refresh-jwt-token", handlers_1.default.refreshJWTToken);
 for (const provider of locals_1.default.config().providers) {
     router.get(`/signin/${provider}`, passport_1.default.authenticate(provider));
     router.get(`/signin/${provider}/callback`, passport_1.default.authenticate(provider, {

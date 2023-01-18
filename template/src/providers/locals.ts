@@ -11,9 +11,12 @@ class Locals {
 
     const port = process.env.APP_PORT || "";
     const appId = process.env.APP_ID || "";
+
     const authTokenExpiresIn = process.env.AUTH_TOKEN_EXPIRES_IN || "7D";
-    const resetPasswordExpiresIn =
-      process.env.RESET_PASSWORD_EXPIRES_IN || "24H";
+
+    const refreshTokenSecret =
+      process.env.REFRESH_TOKEN_SECRET || "refresh-token-secret";
+    const refreshTokenExpiresIn = process.env.REFRESH_TOKEN_EXPIRES_IN || "30D";
 
     const hasuraGraphqlUnauthorizedRole =
       process.env.HASURA_GRAPHQL_UNAUTHORIZED_ROLE || "";
@@ -28,28 +31,31 @@ class Locals {
     const googleClientSecret = process.env.AUTH_GOOGLE_CLIENT_SECRET || "";
 
     const microsoftClientId = process.env.AUTH_MICROSOFT_CLIENT_ID || "";
-    const microsoftClientSecret = process.env.AUTH_MICROSOFT_CLIENT_SECRET || "";
+    const microsoftClientSecret =
+      process.env.AUTH_MICROSOFT_CLIENT_SECRET || "";
 
     const githubClientId = process.env.AUTH_GITHUB_CLIENT_ID || "";
     const githubClientSecret = process.env.AUTH_GITHUB_CLIENT_SECRET || "";
 
-    const providers =  [
-      "google",
-      "microsoft",
-      "github"
-    ]
+    const providers = ["google", "microsoft", "github"];
 
     return {
       port,
       appId,
+      //
       authTokenExpiresIn,
-      resetPasswordExpiresIn,
+      //
+      refreshTokenSecret,
+      refreshTokenExpiresIn,
+      //
       hasuraGraphqlUnauthorizedRole,
       hasuraAdminSecret,
       hasuraGraphqlUserRole,
       hasuraGraphqlURL,
+      //
       jwtSecret,
       jwtKey,
+      //
       providers,
       //google
       googleClientId,

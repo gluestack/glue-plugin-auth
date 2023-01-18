@@ -29,10 +29,14 @@ class Signup {
         return Common.Response(res, false, error, null);
       }
 
+      const { allowedRoles, defaultRole } =
+        await Helpers.getAllowedAndDefaultRoles();
+
       // create Token for authentication
       const token = await Helpers.CreateToken({
         id: data.data.insert_users_one.id,
-        role: "user",
+        allowed_roles: allowedRoles,
+        default_role: defaultRole,
       });
 
       return Common.Response(res, true, "Signup successfully!", {

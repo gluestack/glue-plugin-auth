@@ -1,7 +1,6 @@
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Queries from "../graphql/queries";
-import Locals from "../../../providers/locals";
 
 class Signin {
   public static async success(req: any, res: any): Promise<void> {
@@ -25,10 +24,14 @@ class Signin {
         return res.json({});
       }
 
+      const { allowedRoles, defaultRole } =
+        await Helpers.getAllowedAndDefaultRoles();
+
       // create Token for authentication
       const token = await Helpers.CreateToken({
         id: data.data.users[0].id,
-        role: Locals.config().hasuraGraphqlUserRole,
+        allowed_roles: allowedRoles,
+        default_role: defaultRole,
       });
 
       return res.render("token", {

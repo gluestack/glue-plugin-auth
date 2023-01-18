@@ -1,9 +1,9 @@
 module.exports = () => [
   {
-    "path": "/backend/functions",
+    "path": "/backend/auth",
     "proxy": {
-      "instance": "functions:3500",
-      "path": "/v1.0/invoke/functions/method/"
+      "instance": "auth:3500",
+      "path": "/v1.0/invoke/auth/method/"
     }
   }
 ];

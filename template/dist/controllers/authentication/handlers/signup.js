@@ -35,10 +35,12 @@ class Signup {
                         "Something went wrong!";
                     return commons_1.default.Response(res, false, error, null);
                 }
+                const { allowedRoles, defaultRole } = yield helpers_1.default.getAllowedAndDefaultRoles();
                 // create Token for authentication
                 const token = yield helpers_1.default.CreateToken({
                     id: data.data.insert_users_one.id,
-                    role: "user",
+                    allowed_roles: allowedRoles,
+                    default_role: defaultRole,
                 });
                 return commons_1.default.Response(res, true, "Signup successfully!", Object.assign(Object.assign({}, data.data.insert_users_one), token));
             }

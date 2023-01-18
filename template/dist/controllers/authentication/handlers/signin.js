@@ -13,7 +13,6 @@ const bcrypt = require("bcrypt");
 const commons_1 = require("../../commons");
 const helpers_1 = require("../helpers");
 const queries_1 = require("../graphql/queries");
-const locals_1 = require("../../../providers/locals");
 class Signin {
     static handle(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38,15 +37,17 @@ class Signin {
                 if (!validPassword) {
                     return commons_1.default.Response(res, false, "Invalid Password", null);
                 }
+                const { allowedRoles, defaultRole } = yield helpers_1.default.getAllowedAndDefaultRoles();
                 // create Token for authentication
                 const token = yield helpers_1.default.CreateToken({
                     id: data.data.users[0].id,
-                    role: locals_1.default.config().hasuraGraphqlUserRole,
+                    allowed_roles: allowedRoles,
+                    default_role: defaultRole,
                 });
                 return res.json({
                     success: true,
                     message: "Sign in successfully!",
-                    data: Object.assign({ id: data.data.users[0].id, name: data.data.users[0].name, email: data.data.users[0].email, created_at: data.data.users[0].created_at, updated_at: data.data.users[0].updated_at }, token),
+                    data: Object.assign(Object.assign({}, data.data.users[0]), token),
                 });
             }
             catch (error) {
