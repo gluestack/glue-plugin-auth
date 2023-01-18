@@ -70,11 +70,12 @@ export class GlueStackPlugin
         "auth supports instance name `auth` only",
       );
     }
-    
+
     const graphqlPlugin: GlueStackPlugin = this.app.getPluginByName(
       "@gluestack/glue-plugin-graphql",
     );
-    //Validation
+
+    // Validation
     if (!graphqlPlugin || !graphqlPlugin.getInstances().length) {
       console.log("\x1b[36m");
       console.log(
