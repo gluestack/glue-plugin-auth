@@ -77,7 +77,15 @@ var GlueStackPlugin = (function () {
             var graphqlPlugin, graphqlInstances, authInstance;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
+                    case 0: return [4, this.checkAlreadyInstalled()];
+                    case 1:
+                        _a.sent();
+                        if (instanceName !== "auth") {
+                            console.log("\x1b[36m");
+                            console.log("Install auth instance: `node glue add auth auth`");
+                            console.log("\x1b[31m");
+                            throw new Error("auth supports instance name `auth` only");
+                        }
                         graphqlPlugin = this.app.getPluginByName("@gluestack/glue-plugin-graphql");
                         if (!graphqlPlugin || !graphqlPlugin.getInstances().length) {
                             console.log("\x1b[36m");
@@ -97,15 +105,30 @@ var GlueStackPlugin = (function () {
                             throw new Error("There is no graphql instance where auth plugin can be installed");
                         }
                         return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
-                    case 1:
-                        authInstance = _a.sent();
-                        if (!authInstance) return [3, 3];
-                        return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
                     case 2:
+                        authInstance = _a.sent();
+                        if (!authInstance) return [3, 4];
+                        return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
+                    case 3:
                         _a.sent();
-                        _a.label = 3;
-                    case 3: return [2];
+                        _a.label = 4;
+                    case 4: return [2];
                 }
+            });
+        });
+    };
+    GlueStackPlugin.prototype.checkAlreadyInstalled = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var authPlugin;
+            return __generator(this, function (_b) {
+                authPlugin = this.app.getPluginByName("@gluestack/glue-plugin-auth");
+                if ((_a = authPlugin === null || authPlugin === void 0 ? void 0 : authPlugin.getInstances()) === null || _a === void 0 ? void 0 : _a[0]) {
+                    throw new Error("auth instance already installed as ".concat(authPlugin
+                        .getInstances()[0]
+                        .getName()));
+                }
+                return [2];
             });
         });
     };
