@@ -1,6 +1,6 @@
 {
     "name": "@gluestack/glue-plugin-auth",
-    "version": "0.0.19",
+    "version": "0.0.20",
     "description": "auth plugin for gluestack",
     "repository": {
         "type": "git",
@@ -29,7 +29,6 @@
         "typescript": "^4.9.4"
     },
     "peerDependencies": {
-        "@gluestack/framework": "^0.0.x",
         "@gluestack/glue-plugin-graphql": "^0.0.x"
     }
 }
