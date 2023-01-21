@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt";
+import * as bcryptjs from "bcryptjs";
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Mutations from "../graphql/mutations";
@@ -9,7 +9,7 @@ class Signup {
 
     try {
       // hash password
-      const hashPswd = await bcrypt.hash(password, 12);
+      const hashPswd = await bcryptjs.hash(password, 12);
 
       // graphql query
       const { data, errors } = await Common.GQLRequest({

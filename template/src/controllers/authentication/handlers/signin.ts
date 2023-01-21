@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt";
+import * as bcryptjs from "bcryptjs";
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Queries from "../graphql/queries";
@@ -31,7 +31,7 @@ class Signin {
       }
 
       // check password with the hashed password
-      const validPassword = await bcrypt.compare(
+      const validPassword = await bcryptjs.compare(
         password,
         data.data.users[0].password,
       );
