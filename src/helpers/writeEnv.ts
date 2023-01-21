@@ -13,7 +13,8 @@ export async function constructEnvFromJson(
     APP_PORT: await authInstance.getContainerController().getPortNumber(),
     APP_ID: replaceSpecialChars(authInstance.getName()),
     AUTH_TOKEN_EXPIRES_IN: "7D",
-    RESET_PASSWORD_EXPIRES_IN: "24H",
+    REFRESH_TOKEN_SECRET: "refresh-token-secret",
+    REFRESH_TOKEN_EXPIRES_IN: "30D",
     //
     HASURA_GRAPHQL_UNAUTHORIZED_ROLE:
       json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",

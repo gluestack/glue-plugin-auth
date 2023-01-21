@@ -1,8 +1,7 @@
-import * as bcrypt from "bcrypt";
+import * as bcryptjs from "bcryptjs";
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Queries from "../graphql/queries";
-import Locals from "../../../providers/locals";
 
 class Signin {
   public static async handle(req: any, res: any): Promise<void> {
@@ -32,29 +31,28 @@ class Signin {
       }
 
       // check password with the hashed password
-      const validPassword = await bcrypt.compare(
+      const validPassword = await bcryptjs.compare(
         password,
         data.data.users[0].password,
       );
       if (!validPassword) {
         return Common.Response(res, false, "Invalid Password", null);
       }
+      const { allowedRoles, defaultRole } =
+        await Helpers.getAllowedAndDefaultRoles();
 
       // create Token for authentication
       const token = await Helpers.CreateToken({
         id: data.data.users[0].id,
-        role: Locals.config().hasuraGraphqlUserRole,
+        allowed_roles: allowedRoles,
+        default_role: defaultRole,
       });
 
       return res.json({
         success: true,
         message: "Sign in successfully!",
         data: {
-          id: data.data.users[0].id,
-          name: data.data.users[0].name,
-          email: data.data.users[0].email,
-          created_at: data.data.users[0].created_at,
-          updated_at: data.data.users[0].updated_at,
+          ...data.data.users[0],
           ...token,
         },
       });

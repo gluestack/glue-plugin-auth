@@ -1,7 +1,8 @@
-import Signin from './signin';
-import Signup from './signup';
-import User from './user';
-import SocialSignin from './socialSignin';
+import Signin from "./signin";
+import Signup from "./signup";
+import User from "./user";
+import SocialSignin from "./socialSignin";
+import RefreshJWTToken from "./refresh-jwt-token";
 
 class Authentication {
   public signin(req: any, res: any): any {
@@ -10,6 +11,10 @@ class Authentication {
 
   public signup(req: any, res: any): any {
     return Signup.handle(req, res);
+  }
+
+  public refreshJWTToken(req: any, res: any): any {
+    return RefreshJWTToken.handle(req, res);
   }
 
   public user(req: any, res: any): any {
@@ -25,4 +30,4 @@ class Authentication {
   }
 }
 
-export default new Authentication;
+export default new Authentication();

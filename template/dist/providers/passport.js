@@ -11,33 +11,39 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
     done(null, user);
 });
-passport.use(new passport_google_oidc_1.Strategy({
-    clientID: locals_1.default.config().googleClientId,
-    clientSecret: locals_1.default.config().googleClientSecret,
-    callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/google/callback`,
-    scope: ["email"],
-}, (req, profile, issuer, done) => {
-    var _a;
-    return done(null, ((_a = profile === null || profile === void 0 ? void 0 : profile.emails[0]) === null || _a === void 0 ? void 0 : _a.value) || null);
-}));
-passport.use(new passport_microsoft_1.Strategy({
-    clientID: locals_1.default.config().microsoftClientId,
-    clientSecret: locals_1.default.config().microsoftClientSecret,
-    callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/microsoft/callback`,
-    scope: ["user.read"],
-}, (req, issuer, profile, done) => {
-    var _a;
-    return done(null, ((_a = profile === null || profile === void 0 ? void 0 : profile.emails[0]) === null || _a === void 0 ? void 0 : _a.value) || null);
-}));
-passport.use(new passport_github2_1.Strategy({
-    clientID: locals_1.default.config().githubClientId,
-    clientSecret: locals_1.default.config().githubClientSecret,
-    callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/github/callback`,
-    scope: ["user:email"],
-}, (req, issuer, profile, done) => {
-    var _a;
-    return done(null, ((_a = profile === null || profile === void 0 ? void 0 : profile.emails[0]) === null || _a === void 0 ? void 0 : _a.value) || null);
-}));
+if (locals_1.default.config().googleClientId && locals_1.default.config().googleClientSecret) {
+    passport.use(new passport_google_oidc_1.Strategy({
+        clientID: locals_1.default.config().googleClientId,
+        clientSecret: locals_1.default.config().googleClientSecret,
+        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/google/callback`,
+        scope: ["email"],
+    }, (req, profile, issuer, done) => {
+        var _a;
+        return done(null, ((_a = profile === null || profile === void 0 ? void 0 : profile.emails[0]) === null || _a === void 0 ? void 0 : _a.value) || null);
+    }));
+}
+if (locals_1.default.config().microsoftClientId && locals_1.default.config().microsoftClientSecret) {
+    passport.use(new passport_microsoft_1.Strategy({
+        clientID: locals_1.default.config().microsoftClientId,
+        clientSecret: locals_1.default.config().microsoftClientSecret,
+        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/microsoft/callback`,
+        scope: ["user.read"],
+    }, (req, issuer, profile, done) => {
+        var _a;
+        return done(null, ((_a = profile === null || profile === void 0 ? void 0 : profile.emails[0]) === null || _a === void 0 ? void 0 : _a.value) || null);
+    }));
+}
+if (locals_1.default.config().githubClientId && locals_1.default.config().githubClientSecret) {
+    passport.use(new passport_github2_1.Strategy({
+        clientID: locals_1.default.config().githubClientId,
+        clientSecret: locals_1.default.config().githubClientSecret,
+        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/github/callback`,
+        scope: ["user:email"],
+    }, (req, issuer, profile, done) => {
+        var _a;
+        return done(null, ((_a = profile === null || profile === void 0 ? void 0 : profile.emails[0]) === null || _a === void 0 ? void 0 : _a.value) || null);
+    }));
+}
 passport.initialize();
 passport.session();
 exports.default = passport;

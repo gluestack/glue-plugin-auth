@@ -1,4 +1,4 @@
-import * as bcrypt from "bcrypt";
+import * as bcryptjs from "bcryptjs";
 import Common from "../../commons";
 import Helpers from "../helpers";
 import Mutations from "../graphql/mutations";
@@ -9,7 +9,7 @@ class Signup {
 
     try {
       // hash password
-      const hashPswd = await bcrypt.hash(password, 12);
+      const hashPswd = await bcryptjs.hash(password, 12);
 
       // graphql query
       const { data, errors } = await Common.GQLRequest({
@@ -29,10 +29,14 @@ class Signup {
         return Common.Response(res, false, error, null);
       }
 
+      const { allowedRoles, defaultRole } =
+        await Helpers.getAllowedAndDefaultRoles();
+
       // create Token for authentication
       const token = await Helpers.CreateToken({
         id: data.data.insert_users_one.id,
-        role: "user",
+        allowed_roles: allowedRoles,
+        default_role: defaultRole,
       });
 
       return Common.Response(res, true, "Signup successfully!", {

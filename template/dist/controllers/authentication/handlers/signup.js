@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const commons_1 = require("../../commons");
 const helpers_1 = require("../helpers");
 const mutations_1 = require("../graphql/mutations");
@@ -19,7 +19,7 @@ class Signup {
             const { name, email, password } = req.body.input || req.body;
             try {
                 // hash password
-                const hashPswd = yield bcrypt.hash(password, 12);
+                const hashPswd = yield bcryptjs.hash(password, 12);
                 // graphql query
                 const { data, errors } = yield commons_1.default.GQLRequest({
                     variables: {
@@ -35,10 +35,12 @@ class Signup {
                         "Something went wrong!";
                     return commons_1.default.Response(res, false, error, null);
                 }
+                const { allowedRoles, defaultRole } = yield helpers_1.default.getAllowedAndDefaultRoles();
                 // create Token for authentication
                 const token = yield helpers_1.default.CreateToken({
                     id: data.data.insert_users_one.id,
-                    role: "user",
+                    allowed_roles: allowedRoles,
+                    default_role: defaultRole,
                 });
                 return commons_1.default.Response(res, true, "Signup successfully!", Object.assign(Object.assign({}, data.data.insert_users_one), token));
             }

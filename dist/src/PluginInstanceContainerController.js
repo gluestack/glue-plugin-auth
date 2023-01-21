@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.PluginInstanceContainerController = void 0;
 var _a = require("@gluestack/helpers"), SpawnHelper = _a.SpawnHelper, DockerodeHelper = _a.DockerodeHelper;
-var create_dockerfile_1 = require("./create-dockerfile");
 var writeEnv_1 = require("./helpers/writeEnv");
 var GlobalEnv = require("@gluestack/helpers").GlobalEnv;
 var PluginInstanceContainerController = (function () {
@@ -125,121 +124,23 @@ var PluginInstanceContainerController = (function () {
     };
     PluginInstanceContainerController.prototype.getConfig = function () { };
     PluginInstanceContainerController.prototype.up = function () {
-        var _a, _b, _c, _d, _e;
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
-                    case 0: return [2];
-                    case 1:
-                        _f.sent();
-                        _f.label = 2;
-                    case 2: return [4, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-                            var _this = this;
-                            return __generator(this, function (_a) {
-                                console.log("\x1b[33m");
-                                console.log("".concat(this.callerInstance.getName(), ": Running \"").concat(this.installScript().join(" "), "\""), "\x1b[0m");
-                                SpawnHelper.run(this.callerInstance.getInstallationPath(), this.installScript())
-                                    .then(function () {
-                                    console.log("\x1b[33m");
-                                    console.log("".concat(_this.callerInstance.getName(), ": Running \"").concat(_this.runScript().join(" "), "\""), "\x1b[0m");
-                                    SpawnHelper.start(_this.callerInstance.getInstallationPath(), _this.runScript())
-                                        .then(function (_a) {
-                                        var processId = _a.processId;
-                                        return __awaiter(_this, void 0, void 0, function () {
-                                            return __generator(this, function (_b) {
-                                                switch (_b.label) {
-                                                    case 0:
-                                                        this.setStatus("up");
-                                                        this.setContainerId(processId);
-                                                        return [4, this.print()];
-                                                    case 1:
-                                                        _b.sent();
-                                                        return [2, resolve(true)];
-                                                }
-                                            });
-                                        });
-                                    })["catch"](function (e) {
-                                        return reject(e);
-                                    });
-                                })["catch"](function (e) {
-                                    return reject(e);
-                                });
-                                return [2];
-                            });
-                        }); })];
-                    case 3:
-                        _f.sent();
-                        return [3, 6];
-                    case 4: return [4, this.print()];
-                    case 5:
-                        _f.sent();
-                        _f.label = 6;
-                    case 6: return [2];
-                }
-            });
-        });
-    };
-    PluginInstanceContainerController.prototype.print = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var routes, _a, _b, _c;
-            var _d, _e;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
-                    case 0:
-                        console.log("\x1b[32m");
-                        console.log("You can now use these endpoints for auth, registered with auth instance: ".concat(this.callerInstance
-                            .getGraphqlInstance()
-                            .getName()), "\x1b[0m");
-                        _d = {};
-                        _a = "http://localhost:".concat;
-                        return [4, this.getPortNumber()];
-                    case 1:
-                        _b = [
-                            (_d.route = _a.apply("http://localhost:", [_f.sent(), "/authentication/signup"]),
-                                _d.method = "POST",
-                                _d.params = "name, email, password",
-                                _d)
-                        ];
-                        _e = {};
-                        _c = "http://localhost:".concat;
-                        return [4, this.getPortNumber()];
-                    case 2:
-                        routes = _b.concat([
-                            (_e.route = _c.apply("http://localhost:", [_f.sent(), "/authentication/signin"]),
-                                _e.method = "POST",
-                                _e.params = "email, password",
-                                _e)
-                        ]);
-                        console.table(routes);
-                        return [2];
-                }
+            return __generator(this, function (_a) {
+                return [2];
             });
         });
     };
     PluginInstanceContainerController.prototype.down = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [2];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [2];
-                }
+                return [2];
             });
         });
     };
     PluginInstanceContainerController.prototype.build = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, (0, create_dockerfile_1.generateDockerfile)(this.callerInstance.getInstallationPath())];
-                    case 1:
-                        _a.sent();
-                        return [2];
-                }
+                return [2];
             });
         });
     };

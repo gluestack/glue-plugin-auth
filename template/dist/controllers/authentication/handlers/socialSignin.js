@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commons_1 = require("../../commons");
 const helpers_1 = require("../helpers");
 const queries_1 = require("../graphql/queries");
-const locals_1 = require("../../../providers/locals");
 class Signin {
     static success(req, res) {
         var _a;
@@ -32,10 +31,12 @@ class Signin {
                     data.data.users.length === 0) {
                     return res.json({});
                 }
+                const { allowedRoles, defaultRole } = yield helpers_1.default.getAllowedAndDefaultRoles();
                 // create Token for authentication
                 const token = yield helpers_1.default.CreateToken({
                     id: data.data.users[0].id,
-                    role: locals_1.default.config().hasuraGraphqlUserRole,
+                    allowed_roles: allowedRoles,
+                    default_role: defaultRole,
                 });
                 return res.render("token", {
                     user: user,

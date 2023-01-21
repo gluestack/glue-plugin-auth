@@ -20,22 +20,66 @@ class Helpers {
             const expires_in = locals_1.default.config().authTokenExpiresIn;
             const tokenContents = {
                 id: _payload.id.toString(),
-                role: _payload.role,
                 "https://hasura.io/jwt/claims": {
-                    "x-hasura-allowed-roles": [_payload.role],
-                    "x-hasura-default-role": _payload.role,
-                    "x-hasura-user-id": _payload.id.toString()
-                }
+                    "x-hasura-allowed-roles": _payload.allowed_roles,
+                    "x-hasura-default-role": _payload.default_role,
+                    "x-hasura-user-id": _payload.id.toString(),
+                },
             };
             const token = jwt.sign(tokenContents, locals_1.default.config().jwtSecret, {
                 algorithm: locals_1.default.config().jwtKey,
                 expiresIn: expires_in,
             });
+            const refreshToken = yield this.CreateRefreshToken(_payload);
             return {
                 token,
-                expires_in,
+                refreshToken,
             };
         });
+    }
+    /**
+     * Create Refresh Token
+     */
+    CreateRefreshToken(_payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const refresh_token = jwt.sign(_payload, locals_1.default.config().refreshTokenSecret, {
+                expiresIn: locals_1.default.config().refreshTokenExpiresIn,
+            });
+            return refresh_token;
+        });
+    }
+    /**
+     * Verify JWT Token
+     */
+    verifyJWTToken(token) {
+        try {
+            const verifiedToken = jwt.verify(token, locals_1.default.config().jwtSecret);
+            return { success: true, token: verifiedToken };
+        }
+        catch (err) {
+            return { success: false, error: err };
+        }
+    }
+    /**
+     * Verify Refresh Token
+     */
+    verifyRefreshToken(token) {
+        try {
+            const verifiedToken = jwt.verify(token, locals_1.default.config().refreshTokenSecret);
+            return { success: true, token: verifiedToken };
+        }
+        catch (err) {
+            return { success: false, error: err };
+        }
+    }
+    /**
+     * Verify Token
+     */
+    getAllowedAndDefaultRoles() {
+        return {
+            allowedRoles: [locals_1.default.config().hasuraGraphqlUserRole],
+            defaultRole: locals_1.default.config().hasuraGraphqlUserRole,
+        };
     }
 }
 exports.default = new Helpers();

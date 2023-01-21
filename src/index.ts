@@ -59,10 +59,23 @@ export class GlueStackPlugin
   }
 
   async runPostInstall(instanceName: string, target: string) {
+    await this.checkAlreadyInstalled();
+    if (instanceName !== "auth") {
+      console.log("\x1b[36m");
+      console.log(
+        `Install auth instance: \`node glue add auth auth\``,
+      );
+      console.log("\x1b[31m");
+      throw new Error(
+        "auth supports instance name `auth` only",
+      );
+    }
+
     const graphqlPlugin: GlueStackPlugin = this.app.getPluginByName(
       "@gluestack/glue-plugin-graphql",
     );
-    //Validation
+
+    // Validation
     if (!graphqlPlugin || !graphqlPlugin.getInstances().length) {
       console.log("\x1b[36m");
       console.log(
@@ -97,6 +110,20 @@ export class GlueStackPlugin
     );
     if (authInstance) {
       await attachGraphqlInstance(authInstance, graphqlInstances);
+    }
+  }
+
+  async checkAlreadyInstalled() {
+    const authPlugin: GlueStackPlugin = this.app.getPluginByName(
+      "@gluestack/glue-plugin-auth",
+    );
+    //Validation
+    if (authPlugin?.getInstances()?.[0]) {
+      throw new Error(
+        `auth instance already installed as ${authPlugin
+          .getInstances()[0]
+          .getName()}`,
+      );
     }
   }
 
