@@ -2,6 +2,7 @@ import Signin from "./signin";
 import Signup from "./signup";
 import User from "./user";
 import SocialSignin from "./socialSignin";
+import SocialSignup from "./socialSignup";
 import RefreshJWTToken from "./refresh-jwt-token";
 
 class Authentication {
@@ -27,6 +28,14 @@ class Authentication {
 
   public socialSigninFailure(req: any, res: any): any {
     return SocialSignin.failure(req, res);
+  }
+
+  public socialSignupSuccess(req: any, res: any): any {
+    return SocialSignup.success(req, res);
+  }
+
+  public socialSignupFailure(req: any, res: any): any {
+    return SocialSignup.failure(req, res);
   }
 }
 

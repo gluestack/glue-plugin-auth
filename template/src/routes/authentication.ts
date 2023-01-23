@@ -4,6 +4,7 @@ import passport from "../providers/passport";
 // Others
 import Controller from "../controllers/authentication/handlers";
 import Locals from "../providers/locals";
+import Helpers from "../controllers/authentication/helpers";
 
 const router = Router();
 
@@ -16,26 +17,29 @@ router.get("/me", Controller.user);
 router.post("/refresh-jwt-token", Controller.refreshJWTToken);
 
 for (const provider of Locals.config().providers) {
-  router.get(`/signin/${provider}`, passport.authenticate(provider));
-  router.get(
-    `/signin/${provider}/callback`,
-    passport.authenticate(provider, {
-      successRedirect: `/backend/${
+  for (const prefix of ["signin", "signup"]) {
+    router.get(`/${prefix}/${provider}`, passport.authenticate(provider));
+    router.get(
+      `/${prefix}/${provider}/callback`,
+      passport.authenticate(provider, {
+        successRedirect: `/backend/${
         Locals.config().appId
-      }/authentication/signin/${provider}/callback/success`,
-      failureRedirect: `/backend/${
+      }/authentication/${prefix}/${provider}/callback/success`,
+        failureRedirect: `/backend/${
         Locals.config().appId
-      }/authentication/signin/${provider}/callback/failure`,
-    }),
-  );
-  router.get(
-    `/signin/${provider}/callback/success`,
-    Controller.socialSigninSuccess,
-  );
-  router.get(
-    `/signin/${provider}/callback/failure`,
-    Controller.socialSigninFailure,
-  );
+      }/authentication/${prefix}/${provider}/callback/failure`,
+      }),
+    );
+    
+    router.get(
+      `/${prefix}/${provider}/callback/success`,
+      Controller[`social${Helpers.capitalizeFirstLetter(prefix)}Success`],
+    );
+    router.get(
+      `/${prefix}/${provider}/callback/failure`,
+      Controller[`social${Helpers.capitalizeFirstLetter(prefix)}Failure`],
+    );
+  }
 }
 
 export default router;

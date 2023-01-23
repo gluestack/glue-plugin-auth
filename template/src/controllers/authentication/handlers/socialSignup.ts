@@ -3,30 +3,27 @@ import Common from "../../commons";
 import Helpers from "../helpers";
 import Mutations from "../graphql/mutations";
 
-class Signup {
-  public static async handle(req: any, res: any): Promise<void> {
-    const { name, email, password } = req.body.input || req.body;
+class SocialSignup {
+  public static async success(req: any, res: any): Promise<void> {
+    const { user } = req?.session?.passport || { user: null };
+    if (!user)
+      return res.redirect("/authentication/signup/google/callback/failure");
 
+    const password = `glue${user.split("@")[0]}`
+    const hashPswd = await bcryptjs.hash(password, 12);
     try {
-      // hash password
-      const hashPswd = await bcryptjs.hash(password, 12);
-
       // graphql query
       const { data, errors } = await Common.GQLRequest({
         variables: {
-          name,
-          email: email.toLowerCase(),
+          name: user.split("@")[0],
+          email: user.toLowerCase(),
           password: hashPswd,
         },
         query: Mutations.InsertUser,
       });
 
       if (!data || !data.data || !data.data.insert_users_one) {
-        const error =
-          errors ||
-          (data.errors && data.errors[0].message) ||
-          "Something went wrong!";
-        return Common.Response(res, false, error, null);
+        return res.json({});
       }
 
       const { allowedRoles, defaultRole } =
@@ -39,14 +36,18 @@ class Signup {
         default_role: defaultRole,
       });
 
-      return Common.Response(res, true, "Signup successfully!", {
-        ...data.data.insert_users_one,
-        ...token,
+      return res.render("token", {
+        user: user,
+        token: token.token,
       });
-    } catch (error) {
-      return Common.Response(res, false, error.message, null);
+    } catch (e) {
+      return res.json({ error: e.message, user: user });
     }
+  }
+
+  public static async failure(req: any, res: any): Promise<void> {
+    res.send("Error");
   }
 }
 
-export default Signup;
+export default SocialSignup;

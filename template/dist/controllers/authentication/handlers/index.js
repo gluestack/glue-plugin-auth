@@ -4,6 +4,7 @@ const signin_1 = require("./signin");
 const signup_1 = require("./signup");
 const user_1 = require("./user");
 const socialSignin_1 = require("./socialSignin");
+const socialSignup_1 = require("./socialSignup");
 const refresh_jwt_token_1 = require("./refresh-jwt-token");
 class Authentication {
     signin(req, res) {
@@ -23,6 +24,12 @@ class Authentication {
     }
     socialSigninFailure(req, res) {
         return socialSignin_1.default.failure(req, res);
+    }
+    socialSignupSuccess(req, res) {
+        return socialSignup_1.default.success(req, res);
+    }
+    socialSignupFailure(req, res) {
+        return socialSignup_1.default.failure(req, res);
     }
 }
 exports.default = new Authentication();

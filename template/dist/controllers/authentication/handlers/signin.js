@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const commons_1 = require("../../commons");
 const helpers_1 = require("../helpers");
 const queries_1 = require("../graphql/queries");
@@ -33,7 +33,7 @@ class Signin {
                     return commons_1.default.Response(res, false, "no user registered with this email address", null);
                 }
                 // check password with the hashed password
-                const validPassword = yield bcrypt.compare(password, data.data.users[0].password);
+                const validPassword = yield bcryptjs.compare(password, data.data.users[0].password);
                 if (!validPassword) {
                     return commons_1.default.Response(res, false, "Invalid Password", null);
                 }

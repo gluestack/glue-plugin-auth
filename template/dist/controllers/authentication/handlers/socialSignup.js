@@ -13,27 +13,27 @@ const bcryptjs = require("bcryptjs");
 const commons_1 = require("../../commons");
 const helpers_1 = require("../helpers");
 const mutations_1 = require("../graphql/mutations");
-class Signup {
-    static handle(req, res) {
+class SocialSignup {
+    static success(req, res) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const { name, email, password } = req.body.input || req.body;
+            const { user } = ((_a = req === null || req === void 0 ? void 0 : req.session) === null || _a === void 0 ? void 0 : _a.passport) || { user: null };
+            if (!user)
+                return res.redirect("/authentication/signup/google/callback/failure");
+            const password = `glue${user.split("@")[0]}`;
+            const hashPswd = yield bcryptjs.hash(password, 12);
             try {
-                // hash password
-                const hashPswd = yield bcryptjs.hash(password, 12);
                 // graphql query
                 const { data, errors } = yield commons_1.default.GQLRequest({
                     variables: {
-                        name,
-                        email: email.toLowerCase(),
+                        name: user.split("@")[0],
+                        email: user.toLowerCase(),
                         password: hashPswd,
                     },
                     query: mutations_1.default.InsertUser,
                 });
                 if (!data || !data.data || !data.data.insert_users_one) {
-                    const error = errors ||
-                        (data.errors && data.errors[0].message) ||
-                        "Something went wrong!";
-                    return commons_1.default.Response(res, false, error, null);
+                    return res.json({});
                 }
                 const { allowedRoles, defaultRole } = yield helpers_1.default.getAllowedAndDefaultRoles();
                 // create Token for authentication
@@ -42,13 +42,21 @@ class Signup {
                     allowed_roles: allowedRoles,
                     default_role: defaultRole,
                 });
-                return commons_1.default.Response(res, true, "Signup successfully!", Object.assign(Object.assign({}, data.data.insert_users_one), token));
+                return res.render("token", {
+                    user: user,
+                    token: token.token,
+                });
             }
-            catch (error) {
-                return commons_1.default.Response(res, false, error.message, null);
+            catch (e) {
+                return res.json({ error: e.message, user: user });
             }
         });
     }
+    static failure(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            res.send("Error");
+        });
+    }
 }
-exports.default = Signup;
-//# sourceMappingURL=signup.js.map
+exports.default = SocialSignup;
+//# sourceMappingURL=socialSignup.js.map
