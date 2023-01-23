@@ -46,13 +46,16 @@ export async function attachGraphqlInstance(
   );
   if (graphqlInstance) {
     await setGraphqlConfig(authInstance, graphqlInstance);
+
     await writeEnv(authInstance, graphqlInstance);
+
     await copyToGraphql(authInstance, graphqlInstance);
+
     const routerFilePath = `${authInstance.getInstallationPath()}/router.js`;
     await reWriteFile(
       routerFilePath,
       replaceSpecialChars(authInstance.getName()),
-      "functions",
+      "services",
     );
   }
 }

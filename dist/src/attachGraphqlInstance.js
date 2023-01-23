@@ -98,7 +98,7 @@ function attachGraphqlInstance(authInstance, graphqlInstances) {
                 case 4:
                     _a.sent();
                     routerFilePath = "".concat(authInstance.getInstallationPath(), "/router.js");
-                    return [4, (0, reWriteFile_1["default"])(routerFilePath, (0, replaceSpecialChars_1.replaceSpecialChars)(authInstance.getName()), "functions")];
+                    return [4, (0, reWriteFile_1["default"])(routerFilePath, (0, replaceSpecialChars_1.replaceSpecialChars)(authInstance.getName()), "services")];
                 case 5:
                     _a.sent();
                     _a.label = 6;
