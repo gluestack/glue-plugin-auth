@@ -74,7 +74,7 @@ export class PluginInstance
         "@gluestack/glue-plugin-graphql",
       );
       if (plugin) {
-        plugin.getInstances().map((instance: GraphqlPluginInstance) => {
+        plugin.getInstances().forEach((instance: GraphqlPluginInstance) => {
           if (instance.getName() === graphql_instance) {
             graphqlInstance = instance;
           }

@@ -60,6 +60,54 @@ if (Locals.config().githubClientId && Locals.config().githubClientSecret) {
   );
 }
 
+if (Locals.config().googleClientId && Locals.config().googleClientSecret) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: Locals.config().googleClientId,
+        clientSecret: Locals.config().googleClientSecret,
+        callbackURL: `/backend/${Locals.config().appId}/authentication/signup/google/callback`,
+        scope: ["email"],
+      },
+      (req, profile, issuer, done) => {
+        return done(null, profile?.emails[0]?.value || null);
+      },
+    ),
+  );
+}
+
+if (Locals.config().microsoftClientId && Locals.config().microsoftClientSecret) {
+  passport.use(
+    new MicrosoftStrategy(
+      {
+        clientID: Locals.config().microsoftClientId,
+        clientSecret: Locals.config().microsoftClientSecret,
+        callbackURL: `/backend/${Locals.config().appId}/authentication/signup/microsoft/callback`,
+        scope: ["user.read"],
+      },
+      (req, issuer, profile, done) => {
+        return done(null, profile?.emails[0]?.value || null);
+      },
+    ),
+  );
+}
+
+if (Locals.config().githubClientId && Locals.config().githubClientSecret) {
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: Locals.config().githubClientId,
+        clientSecret: Locals.config().githubClientSecret,
+        callbackURL: `/backend/${Locals.config().appId}/authentication/signup/github/callback`,
+        scope: ["user:email"],
+      },
+      (req, issuer, profile, done) => {
+        return done(null, profile?.emails[0]?.value || null);
+      },
+    ),
+  );
+}
+
 passport.initialize();
 
 passport.session();

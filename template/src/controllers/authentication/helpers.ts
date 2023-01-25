@@ -77,13 +77,34 @@ class Helpers {
   }
 
   /**
-   * Verify Token
+   * getAllowedAndDefaultRoles
    */
   public getAllowedAndDefaultRoles() {
     return {
       allowedRoles: [Locals.config().hasuraGraphqlUserRole],
       defaultRole: Locals.config().hasuraGraphqlUserRole,
     };
+  }
+
+  /**
+   * Password Generator
+   */
+  public passwordGenerator(passwordLength:number = 16) {
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let password = "";
+    for (var i = 0; i <= passwordLength; i++) {
+      var randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber +1);
+    }
+    return password;
+  }
+
+  /**
+   * Capitalize First Letter
+   */
+
+  public capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
 
