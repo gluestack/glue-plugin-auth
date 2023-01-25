@@ -126,10 +126,21 @@ export class PluginInstanceContainerController implements IContainerController {
       { method: "POST", path: "/signup" },
       { method: "GET", path: "/me" },
       { method: "POST", path: "/refresh-jwt-token" },
-      { method: "GET", path: "/{prefix}/{provider}" },
-      { method: "GET", path: "/{prefix}/{provider}/callback" },
-      { method: "GET", path: "/{prefix}/{provider}/callback/success" },
-      { method: "GET", path: "/{prefix}/{provider}/callback/failure" }
+      { method: "GET", path: "/signin/google" },
+      { method: "GET", path: "/signup/google" },
+      { method: "GET", path: "/signin/google/callback" },
+      { method: "GET", path: "/signin/google/callback/success" },
+      { method: "GET", path: "/signin/google/callback/failure" },
+      { method: "GET", path: "/signin/microsoft" },
+      { method: "GET", path: "/signup/microsoft" },
+      { method: "GET", path: "/signin/microsoft/callback" },
+      { method: "GET", path: "/signin/microsoft/callback/success" },
+      { method: "GET", path: "/signin/microsoft/callback/failure" },
+      { method: "GET", path: "/signin/github" },
+      { method: "GET", path: "/signup/github" },
+      { method: "GET", path: "/signin/github/callback" },
+      { method: "GET", path: "/signin/github/callback/success" },
+      { method: "GET", path: "/signin/github/callback/failure" }
     ];
 
     return Promise.resolve(routes);
