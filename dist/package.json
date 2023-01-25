@@ -1,6 +1,6 @@
 {
     "name": "@gluestack/glue-plugin-auth",
-    "version": "0.0.26",
+    "version": "0.0.27",
     "description": "auth plugin for gluestack",
     "repository": {
         "type": "git",

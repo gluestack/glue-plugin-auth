@@ -1,6 +1,5 @@
-const { SpawnHelper, DockerodeHelper } = require("@gluestack/helpers");
 import IApp from "@gluestack/framework/types/app/interface/IApp";
-import IContainerController from "@gluestack/framework/types/plugin/interface/IContainerController";
+import IContainerController, { IRoutes } from "@gluestack/framework/types/plugin/interface/IContainerController";
 import { constructEnvFromJson } from "./helpers/writeEnv";
 import { PluginInstance } from "./PluginInstance";
 const { GlobalEnv } = require("@gluestack/helpers");
@@ -107,7 +106,7 @@ export class PluginInstanceContainerController implements IContainerController {
     return (this.containerId = containerId || null);
   }
 
-  getConfig(): any {}
+  getConfig(): any { }
 
   async up() {
     //
@@ -119,5 +118,20 @@ export class PluginInstanceContainerController implements IContainerController {
 
   async build() {
     //
+  }
+
+  async getRoutes(): Promise<IRoutes[]> {
+    const routes: IRoutes[] = [
+      { method: "POST", path: "/signin" },
+      { method: "POST", path: "/signup" },
+      { method: "GET", path: "/me" },
+      { method: "POST", path: "/refresh-jwt-token" },
+      { method: "GET", path: "/{prefix}/{provider}" },
+      { method: "GET", path: "/{prefix}/{provider}/callback" },
+      { method: "GET", path: "/{prefix}/{provider}/callback/success" },
+      { method: "GET", path: "/{prefix}/{provider}/callback/failure" }
+    ];
+
+    return Promise.resolve(routes);
   }
 }
