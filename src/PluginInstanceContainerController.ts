@@ -2,7 +2,7 @@ import IApp from "@gluestack/framework/types/app/interface/IApp";
 import IContainerController, { IRoutes } from "@gluestack/framework/types/plugin/interface/IContainerController";
 import { constructEnvFromJson } from "./helpers/writeEnv";
 import { PluginInstance } from "./PluginInstance";
-const { GlobalEnv } = require("@gluestack/helpers");
+const { GlobalEnv, SpawnHelper } = require("@gluestack/helpers");
 
 export class PluginInstanceContainerController implements IContainerController {
   app: IApp;
@@ -40,6 +40,10 @@ export class PluginInstanceContainerController implements IContainerController {
 
   runScript() {
     return ["npm", "run", "dev"];
+  }
+
+  buildScript() {
+    return ["npm", "run", "build"];
   }
 
   async getEnv() {
@@ -117,7 +121,8 @@ export class PluginInstanceContainerController implements IContainerController {
   }
 
   async build() {
-    //
+    await SpawnHelper.start(this.callerInstance.getInstallationPath(), this.installScript());
+    await SpawnHelper.start(this.callerInstance.getInstallationPath(), this.buildScript());
   }
 
   async getRoutes(): Promise<IRoutes[]> {
