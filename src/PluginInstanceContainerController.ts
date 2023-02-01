@@ -123,11 +123,11 @@ export class PluginInstanceContainerController implements IContainerController {
 	}
 
 	async build() {
-		await SpawnHelper.start(
+		await SpawnHelper.run(
 			this.callerInstance.getInstallationPath(),
 			this.installScript()
 		).then(async () => {
-			await SpawnHelper.start(
+			await SpawnHelper.run(
 				this.callerInstance.getInstallationPath(),
 				this.buildScript()
 			);
