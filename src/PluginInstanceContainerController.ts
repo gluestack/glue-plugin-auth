@@ -74,19 +74,19 @@ export class PluginInstanceContainerController implements IContainerController {
 			return resolve(this.portNumber);
 
 			/*
-      let ports =
-        this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
-      DockerodeHelper.getPort(9000, ports)
-        .then((port: number) => {
-          this.setPortNumber(port);
-          ports.push(port);
-          this.callerInstance.callerPlugin.gluePluginStore.set("ports", ports);
-          return resolve(this.portNumber);
-        })
-        .catch((e: any) => {
-          reject(e);
-        });
-        */
+			let ports =
+				this.callerInstance.callerPlugin.gluePluginStore.get("ports") || [];
+			DockerodeHelper.getPort(9000, ports)
+				.then((port: number) => {
+					this.setPortNumber(port);
+					ports.push(port);
+					this.callerInstance.callerPlugin.gluePluginStore.set("ports", ports);
+					return resolve(this.portNumber);
+				})
+				.catch((e: any) => {
+					reject(e);
+				});
+				*/
 		});
 	}
 
@@ -112,7 +112,7 @@ export class PluginInstanceContainerController implements IContainerController {
 		return (this.containerId = containerId || null);
 	}
 
-	getConfig(): any {}
+	getConfig(): any { }
 
 	async up() {
 		//
@@ -126,12 +126,11 @@ export class PluginInstanceContainerController implements IContainerController {
 		await SpawnHelper.run(
 			this.callerInstance.getInstallationPath(),
 			this.installScript()
-		).then(async () => {
-			await SpawnHelper.run(
-				this.callerInstance.getInstallationPath(),
-				this.buildScript()
-			);
-		});
+		);
+		await SpawnHelper.run(
+			this.callerInstance.getInstallationPath(),
+			this.buildScript()
+		);
 	}
 
 	async getRoutes(): Promise<IRoutes[]> {
