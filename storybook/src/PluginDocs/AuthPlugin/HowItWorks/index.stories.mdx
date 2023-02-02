@@ -13,6 +13,13 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
   
   <br/>
   
+  * Auth plugin instance will be registered as a service inside our **backend-engine**.
+  
+  
+  <br/>
+  
+  
+  
   * Auth plugin instance will be running with a **Dapr Sidecar** which
   is managed by your **Backend-Engine** plugin.
   
@@ -22,92 +29,66 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
   
   
   * Behind the scenes your auth plugin instance is written in **Express App** 
-  which is connected with your **Glue Plugin Graphql** which is running behind
-  the scene.
+  which is connected with your **Glue Plugin Backend-Engine**, **Glue Plugin Graphql** which is
+  running behind the scene.
   
   
   <br/>
   
   * Your **Backend-Engine** plugin will treat **auth plugin instance** as
   a seperatre independent microservice. Behind the scene it will handle everything.
-  Like providing you baseurl to interact with your authentication application.
+  Like providing you baseurl to interact with your authentication service.
   
   <br/>
 
-  * If the auth plugin is installed correctly, then you will get a folder named auth
-  inside your functions folder, where your whole logic of authentication is written.
+  * If the **auth** plugin is installed correctly, then you will get a folder named auth
+  inside your **services** folder, where your whole logic of authentication is written.
 
   <br/>
   
-  * Your directory stucture for the **Authentication instance auth** should be something
+  * Your directory stucture for the **Auth Plugin Instance** should be something
     like this:
     <br/>
 
     ```
       📦auth
-      ┣ 📂src
-      ┃ ┣ 📂controllers
-      ┃ ┃ ┣ 📂authentication
-      ┃ ┃ ┃ ┣ 📂graphql
-      ┃ ┃ ┃ ┃ ┣ 📜mutations.ts
-      ┃ ┃ ┃ ┃ ┗ 📜queries.ts
-      ┃ ┃ ┃ ┣ 📂handlers
-      ┃ ┃ ┃ ┃ ┣ 📜index.ts
-      ┃ ┃ ┃ ┃ ┣ 📜signin.ts
-      ┃ ┃ ┃ ┃ ┣ 📜signup.ts
-      ┃ ┃ ┃ ┃ ┣ 📜socialSignin.ts
-      ┃ ┃ ┃ ┃ ┗ 📜user.ts
-      ┃ ┃ ┃ ┗ 📜helpers.ts
-      ┃ ┃ ┗ 📜commons.ts
-      ┃ ┣ 📂providers
-      ┃ ┃ ┣ 📜Routes.ts
-      ┃ ┃ ┣ 📜express.ts
-      ┃ ┃ ┣ 📜locals.ts
-      ┃ ┃ ┗ 📜passport.ts
-      ┃ ┣ 📂routes
-      ┃ ┃ ┣ 📜.gitkeep
-      ┃ ┃ ┗ 📜authentication.ts
-      ┃ ┗ 📜index.ts
-      ┣ 📂views
-      ┃ ┗ 📜token.html
-      ┣ 📜.env
-      ┣ 📜Dockerfile
-      ┣ 📜README.md
-      ┣ 📜package.json
-      ┣ 📜router.js
-      ┣ 📜tsconfig.json
-      ┗ 📜tslint.json
+        ┣ 📂components
+        ┣ 📂src
+        ┃ ┣ 📂controllers
+        ┃ ┃ ┣ 📂authentication
+        ┃ ┃ ┃ ┣ 📂graphql
+        ┃ ┃ ┃ ┃ ┣ 📜mutations.ts
+        ┃ ┃ ┃ ┃ ┗ 📜queries.ts
+        ┃ ┃ ┃ ┣ 📂handlers
+        ┃ ┃ ┃ ┃ ┣ 📜index.ts
+        ┃ ┃ ┃ ┃ ┣ 📜refresh-jwt-token.ts
+        ┃ ┃ ┃ ┃ ┣ 📜signin.ts
+        ┃ ┃ ┃ ┃ ┣ 📜signup.ts
+        ┃ ┃ ┃ ┃ ┣ 📜socialSignin.ts
+        ┃ ┃ ┃ ┃ ┣ 📜socialSignup.ts
+        ┃ ┃ ┃ ┃ ┗ 📜user.ts
+        ┃ ┃ ┃ ┣ 📂models
+        ┃ ┃ ┃ ┃ ┗ 📜user.ts
+        ┃ ┃ ┃ ┗ 📜helpers.ts
+        ┃ ┃ ┗ 📜commons.ts
+        ┃ ┣ 📂providers
+        ┃ ┃ ┣ 📜Routes.ts
+        ┃ ┃ ┣ 📜express.ts
+        ┃ ┃ ┣ 📜locals.ts
+        ┃ ┃ ┗ 📜passport.ts
+        ┃ ┣ 📂routes
+        ┃ ┃ ┣ 📜.gitkeep
+        ┃ ┃ ┗ 📜authentication.ts
+        ┃ ┗ 📜index.ts
+        ┣ 📂views
+        ┃ ┗ 📜token.html
+        ┣ 📜.env
+        ┣ 📜README.md
+        ┣ 📜package.json
+        ┣ 📜router.js
+        ┣ 📜tsconfig.json
+        ┗ 📜tslint.json
     ```
-  <br/>
-  <br/>
-  
-  * In order to interact with this plugin there is a file named **router.js**
-    present in root directory of the instance. If you open that **router.js** 
-    file, you will see a string value attached to a key named **path**, this
-    is the string which you need to append after your nginx url(http://localhost:9090).
-  
-    In my case my path value will be something like this:
-    
-      ```
-      module.exports = () => [
-        {
-          "path": "/backend/auth",
-          "proxy": {
-          "instance": "auth:3500",
-          "path": "/v1.0/invoke/auth/method/"
-          }
-        }
-      ];
-      ```
-    
-    <br/>
-    
-    So in order to access my **auth plugin instance** its base url should be
-    something like this,
-      
-      
-    **http://localhost:9090/backend/auth**
-  
   <br/>
   <br/>
   
@@ -123,9 +104,37 @@ import { Canvas, Meta, Story } from "@storybook/addon-docs";
 
     This command will start running the docker image of all the instances
     and plugin you have created. Here, in this case it will start running
-    your **auth plugin instance image**, inside your **Backend-Engine** container.
+    your **auth plugin instance**, inside your **Backend-Engine** container.
   
   <br/>
+  
+  * In order to interact with this plugin there is a file named **router.js**
+    present in root directory of the instance. If you open that **router.js** 
+    file, you will see a string value attached to a key named **path**, this
+    is the string which you need to append after your nginx url(http://localhost:9090).
+  
+    In my case my path value will be something like this:
+    
+      ```
+      module.exports = () => [
+        {
+          "path": "/backend/auth/(.*)",
+          "proxy": {
+          "instance": "auth:3500",
+          "path": "/v1.0/invoke/auth/method/$1"
+          }
+        }
+      ];
+      ```
+    
+    <br/>
+    
+    So in order to access my **auth plugin instance** its base url should be
+    something like this,
+      
+      
+    **http://localhost:9090/backend/auth**
+  
   <br/>
 
 * ## Instructions to start development of auth plugin instance
