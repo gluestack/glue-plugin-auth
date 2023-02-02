@@ -37,9 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.PluginInstanceContainerController = void 0;
-var _a = require("@gluestack/helpers"), SpawnHelper = _a.SpawnHelper, DockerodeHelper = _a.DockerodeHelper;
 var writeEnv_1 = require("./helpers/writeEnv");
-var GlobalEnv = require("@gluestack/helpers").GlobalEnv;
+var _a = require("@gluestack/helpers"), GlobalEnv = _a.GlobalEnv, SpawnHelper = _a.SpawnHelper;
 var PluginInstanceContainerController = (function () {
     function PluginInstanceContainerController(app, callerInstance) {
         this.status = "down";
@@ -75,6 +74,9 @@ var PluginInstanceContainerController = (function () {
     };
     PluginInstanceContainerController.prototype.runScript = function () {
         return ["npm", "run", "dev"];
+    };
+    PluginInstanceContainerController.prototype.buildScript = function () {
+        return ["npm", "run", "build"];
     };
     PluginInstanceContainerController.prototype.getEnv = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -140,7 +142,44 @@ var PluginInstanceContainerController = (function () {
     PluginInstanceContainerController.prototype.build = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2];
+                switch (_a.label) {
+                    case 0: return [4, SpawnHelper.run(this.callerInstance.getInstallationPath(), this.installScript())];
+                    case 1:
+                        _a.sent();
+                        return [4, SpawnHelper.run(this.callerInstance.getInstallationPath(), this.buildScript())];
+                    case 2:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
+    PluginInstanceContainerController.prototype.getRoutes = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var routes;
+            return __generator(this, function (_a) {
+                routes = [
+                    { method: "POST", path: "/signin" },
+                    { method: "POST", path: "/signup" },
+                    { method: "GET", path: "/me" },
+                    { method: "POST", path: "/refresh-jwt-token" },
+                    { method: "GET", path: "/signin/google" },
+                    { method: "GET", path: "/signup/google" },
+                    { method: "GET", path: "/signin/google/callback" },
+                    { method: "GET", path: "/signin/google/callback/success" },
+                    { method: "GET", path: "/signin/google/callback/failure" },
+                    { method: "GET", path: "/signin/microsoft" },
+                    { method: "GET", path: "/signup/microsoft" },
+                    { method: "GET", path: "/signin/microsoft/callback" },
+                    { method: "GET", path: "/signin/microsoft/callback/success" },
+                    { method: "GET", path: "/signin/microsoft/callback/failure" },
+                    { method: "GET", path: "/signin/github" },
+                    { method: "GET", path: "/signup/github" },
+                    { method: "GET", path: "/signin/github/callback" },
+                    { method: "GET", path: "/signin/github/callback/success" },
+                    { method: "GET", path: "/signin/github/callback/failure" },
+                ];
+                return [2, Promise.resolve(routes)];
             });
         });
     };
