@@ -43,6 +43,8 @@ exports.GlueStackPlugin = void 0;
 var package_json_1 = __importDefault(require("../package.json"));
 var PluginInstance_1 = require("./PluginInstance");
 var attachGraphqlInstance_1 = require("./attachGraphqlInstance");
+var reWriteFile_1 = __importDefault(require("./helpers/reWriteFile"));
+var update_workspaces_1 = require("./helpers/update-workspaces");
 var GlueStackPlugin = (function () {
     function GlueStackPlugin(app, gluePluginStore) {
         this.type = "stateless";
@@ -74,7 +76,7 @@ var GlueStackPlugin = (function () {
     };
     GlueStackPlugin.prototype.runPostInstall = function (instanceName, target) {
         return __awaiter(this, void 0, void 0, function () {
-            var graphqlPlugin, graphqlInstances, authInstance;
+            var graphqlPlugin, graphqlInstances, authInstance, pluginPackage, rootPackage;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.checkAlreadyInstalled()];
@@ -107,12 +109,20 @@ var GlueStackPlugin = (function () {
                         return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
                     case 2:
                         authInstance = _a.sent();
-                        if (!authInstance) return [3, 4];
+                        if (!authInstance) return [3, 6];
                         return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
                     case 3:
                         _a.sent();
-                        _a.label = 4;
-                    case 4: return [2];
+                        pluginPackage = "".concat(authInstance.getInstallationPath(), "/package.json");
+                        return [4, (0, reWriteFile_1["default"])(pluginPackage, instanceName, 'INSTANCENAME')];
+                    case 4:
+                        _a.sent();
+                        rootPackage = "".concat(process.cwd(), "/package.json");
+                        return [4, (0, update_workspaces_1.updateWorkspaces)(rootPackage, authInstance.getInstallationPath())];
+                    case 5:
+                        _a.sent();
+                        _a.label = 6;
+                    case 6: return [2];
                 }
             });
         });
