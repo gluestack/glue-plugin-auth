@@ -109,21 +109,20 @@ var GlueStackPlugin = (function () {
                         return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
                     case 2:
                         authInstance = _a.sent();
-                        if (!authInstance) return [3, 4];
+                        if (!authInstance) return [3, 6];
                         return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
                     case 3:
                         _a.sent();
-                        _a.label = 4;
-                    case 4:
                         pluginPackage = "".concat(authInstance.getInstallationPath(), "/package.json");
                         return [4, (0, reWriteFile_1["default"])(pluginPackage, instanceName, 'INSTANCENAME')];
-                    case 5:
+                    case 4:
                         _a.sent();
                         rootPackage = "".concat(process.cwd(), "/package.json");
                         return [4, (0, update_workspaces_1.updateWorkspaces)(rootPackage, authInstance.getInstallationPath())];
-                    case 6:
+                    case 5:
                         _a.sent();
-                        return [2];
+                        _a.label = 6;
+                    case 6: return [2];
                 }
             });
         });
