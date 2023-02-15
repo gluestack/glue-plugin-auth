@@ -61,7 +61,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.writeEnv = exports.constructEnvFromJson = void 0;
 var fs = __importStar(require("fs"));
-var replaceSpecialChars_1 = require("./replaceSpecialChars");
+var removeSpecialChars = require("@gluestack/helpers").removeSpecialChars;
 function constructEnvFromJson(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
         var json, keys;
@@ -75,7 +75,7 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                     return [4, authInstance.getContainerController().getPortNumber()];
                 case 2:
                     keys = (_a.APP_PORT = _b.sent(),
-                        _a.APP_ID = (0, replaceSpecialChars_1.replaceSpecialChars)(authInstance.getName()),
+                        _a.APP_ID = removeSpecialChars(authInstance.getName()),
                         _a.AUTH_TOKEN_EXPIRES_IN = "7D",
                         _a.REFRESH_TOKEN_SECRET = "refresh-token-secret",
                         _a.REFRESH_TOKEN_EXPIRES_IN = "30D",
