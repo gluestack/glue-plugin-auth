@@ -11,7 +11,8 @@ import { attachGraphqlInstance } from "./attachGraphqlInstance";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
 import { IHasMigration } from "./interfaces/IHasMigration";
 import reWriteFile from "./helpers/reWriteFile";
-import { updateWorkspaces } from "./helpers/update-workspaces";
+
+const { Workspaces } = require("@gluestack/helpers");
 
 //Do not edit the name of this class
 export class GlueStackPlugin
@@ -118,7 +119,7 @@ export class GlueStackPlugin
 
       // update root package.json's workspaces with the new instance name
       const rootPackage = `${process.cwd()}/package.json`;
-      await updateWorkspaces(rootPackage, authInstance.getInstallationPath());
+      await Workspaces.append(rootPackage, authInstance.getInstallationPath());
     }
   }
 
