@@ -5,16 +5,17 @@ import IApp from "@gluestack/framework/types/app/interface/IApp";
 import IPlugin from "@gluestack/framework/types/plugin/interface/IPlugin";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
 import ILifeCycle from "@gluestack/framework/types/plugin/interface/ILifeCycle";
-import IManagesInstances from "@gluestack/framework/types/plugin/interface/IManagesInstances";
 import IGlueStorePlugin from "@gluestack/framework/types/store/interface/IGluePluginStore";
-import { attachGraphqlInstance } from "./attachGraphqlInstance";
+import IManagesInstances from "@gluestack/framework/types/plugin/interface/IManagesInstances";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
-import { IHasMigration } from "./interfaces/IHasMigration";
+
 import reWriteFile from "./helpers/reWriteFile";
+import { IHasMigration } from "./interfaces/IHasMigration";
+import { attachGraphqlInstance } from "./helpers/attachGraphqlInstance";
 
-const { Workspaces } = require("@gluestack/helpers");
+import { Workspaces } from "@gluestack/helpers";
 
-//Do not edit the name of this class
+// Do not edit the name of this class
 export class GlueStackPlugin
   implements IPlugin, IManagesInstances, ILifeCycle, IHasMigration {
   app: IApp;
@@ -127,7 +128,7 @@ export class GlueStackPlugin
     const authPlugin: GlueStackPlugin = this.app.getPluginByName(
       "@gluestack/glue-plugin-auth",
     );
-    //Validation
+    // Validation
     if (authPlugin?.getInstances()?.[0]) {
       throw new Error(
         `auth instance already installed as ${authPlugin

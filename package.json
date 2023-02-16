@@ -1,6 +1,6 @@
 {
   "name": "@gluestack/glue-plugin-auth",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "auth plugin for gluestack",
   "repository": {
     "type": "git",
@@ -10,11 +10,12 @@
     "npm",
     "glue-plugin-auth"
   ],
-  "author": "Shivam Singhal",
   "license": "ISC",
   "dependencies": {
     "@gluestack/framework": "^0.0.x",
+    "@gluestack/glue-plugin-backend-engine": "^0.0.x",
     "@gluestack/glue-plugin-graphql": "^0.0.x",
+    "@gluestack/glue-plugin-sdk": "^0.0.x",
     "@gluestack/helpers": "^0.0.x",
     "@types/node": "^18.11.17"
   },

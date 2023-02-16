@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.PluginInstanceContainerController = void 0;
 var writeEnv_1 = require("./helpers/writeEnv");
-var _a = require("@gluestack/helpers"), GlobalEnv = _a.GlobalEnv, SpawnHelper = _a.SpawnHelper;
+var helpers_1 = require("@gluestack/helpers");
 var PluginInstanceContainerController = (function () {
     function PluginInstanceContainerController(app, callerInstance) {
         this.status = "down";
@@ -53,11 +53,11 @@ var PluginInstanceContainerController = (function () {
             var value;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, GlobalEnv.get(this.callerInstance.getName(), key)];
+                    case 0: return [4, helpers_1.GlobalEnv.get(this.callerInstance.getName(), key)];
                     case 1:
                         value = _a.sent();
                         if (!!value) return [3, 3];
-                        return [4, GlobalEnv.set(this.callerInstance.getName(), key, defaultValue)];
+                        return [4, helpers_1.GlobalEnv.set(this.callerInstance.getName(), key, defaultValue)];
                     case 2:
                         _a.sent();
                         return [2, defaultValue];
@@ -143,10 +143,10 @@ var PluginInstanceContainerController = (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, SpawnHelper.run(this.callerInstance.getInstallationPath(), this.installScript())];
+                    case 0: return [4, helpers_1.SpawnHelper.run(this.callerInstance.getInstallationPath(), this.installScript())];
                     case 1:
                         _a.sent();
-                        return [4, SpawnHelper.run(this.callerInstance.getInstallationPath(), this.buildScript())];
+                        return [4, helpers_1.SpawnHelper.run(this.callerInstance.getInstallationPath(), this.buildScript())];
                     case 2:
                         _a.sent();
                         return [2];

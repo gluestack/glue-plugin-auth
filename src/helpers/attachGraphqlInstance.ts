@@ -1,11 +1,12 @@
 const prompts = require("prompts");
-import { PluginInstance } from "./PluginInstance";
+
+import { writeEnv } from "./writeEnv";
+import reWriteFile from "./reWriteFile";
+import { copyToGraphql } from "./copyToGraphql";
+import { PluginInstance } from "../PluginInstance";
+import { removeSpecialChars } from "@gluestack/helpers";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
-import { writeEnv } from "./helpers/writeEnv";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
-import { copyToGraphql } from "./helpers/copyToGraphql";
-import reWriteFile from "./helpers/reWriteFile";
-const { removeSpecialChars } = require("@gluestack/helpers");
 
 export const setGraphqlConfig = async (
   authInstance: PluginInstance,

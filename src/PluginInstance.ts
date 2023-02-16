@@ -1,13 +1,13 @@
 import IApp from "@gluestack/framework/types/app/interface/IApp";
+import { IHasGraphqlInstance } from "./interfaces/IHasGraphqlInstance";
 import IPlugin from "@gluestack/framework/types/plugin/interface/IPlugin";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
 import ILifeCycle from "@gluestack/framework/types/plugin/interface/ILifeCycle";
 import { PluginInstanceContainerController } from "./PluginInstanceContainerController";
-import IContainerController from "@gluestack/framework/types/plugin/interface/IContainerController";
-import IHasContainerController from "@gluestack/framework/types/plugin/interface/IHasContainerController";
 import IGlueStorePlugin from "@gluestack/framework/types/store/interface/IGluePluginStore";
 import IManagesInstances from "@gluestack/framework/types/plugin/interface/IManagesInstances";
-import { IHasGraphqlInstance } from "./interfaces/IHasGraphqlInstance";
+import IContainerController from "@gluestack/framework/types/plugin/interface/IContainerController";
+import IHasContainerController from "@gluestack/framework/types/plugin/interface/IHasContainerController";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
 import { GlueStackPlugin } from "./";
 

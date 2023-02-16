@@ -41,10 +41,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.attachGraphqlInstance = exports.setGraphqlConfig = void 0;
 var prompts = require("prompts");
-var writeEnv_1 = require("./helpers/writeEnv");
-var copyToGraphql_1 = require("./helpers/copyToGraphql");
-var reWriteFile_1 = __importDefault(require("./helpers/reWriteFile"));
-var removeSpecialChars = require("@gluestack/helpers").removeSpecialChars;
+var writeEnv_1 = require("./writeEnv");
+var reWriteFile_1 = __importDefault(require("./reWriteFile"));
+var copyToGraphql_1 = require("./copyToGraphql");
+var helpers_1 = require("@gluestack/helpers");
 var setGraphqlConfig = function (authInstance, graphqlInstance) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         authInstance.gluePluginStore.set("graphql_instance", graphqlInstance.getName());
@@ -98,7 +98,7 @@ function attachGraphqlInstance(authInstance, graphqlInstances) {
                 case 4:
                     _a.sent();
                     routerFilePath = "".concat(authInstance.getInstallationPath(), "/router.js");
-                    return [4, (0, reWriteFile_1["default"])(routerFilePath, removeSpecialChars(authInstance.getName()), "services")];
+                    return [4, (0, reWriteFile_1["default"])(routerFilePath, (0, helpers_1.removeSpecialChars)(authInstance.getName()), "services")];
                 case 5:
                     _a.sent();
                     _a.label = 6;

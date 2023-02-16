@@ -1,10 +1,10 @@
+import { PluginInstance } from "./PluginInstance";
+import { constructEnvFromJson } from "./helpers/writeEnv";
+import { GlobalEnv, SpawnHelper } from "@gluestack/helpers";
 import IApp from "@gluestack/framework/types/app/interface/IApp";
 import IContainerController, {
-	IRoutes,
+	IRoutes
 } from "@gluestack/framework/types/plugin/interface/IContainerController";
-import { constructEnvFromJson } from "./helpers/writeEnv";
-import { PluginInstance } from "./PluginInstance";
-const { GlobalEnv, SpawnHelper } = require("@gluestack/helpers");
 
 export class PluginInstanceContainerController implements IContainerController {
 	app: IApp;

@@ -42,9 +42,9 @@ exports.__esModule = true;
 exports.GlueStackPlugin = void 0;
 var package_json_1 = __importDefault(require("../package.json"));
 var PluginInstance_1 = require("./PluginInstance");
-var attachGraphqlInstance_1 = require("./attachGraphqlInstance");
 var reWriteFile_1 = __importDefault(require("./helpers/reWriteFile"));
-var Workspaces = require("@gluestack/helpers").Workspaces;
+var attachGraphqlInstance_1 = require("./helpers/attachGraphqlInstance");
+var helpers_1 = require("@gluestack/helpers");
 var GlueStackPlugin = (function () {
     function GlueStackPlugin(app, gluePluginStore) {
         this.type = "stateless";
@@ -118,7 +118,7 @@ var GlueStackPlugin = (function () {
                     case 4:
                         _a.sent();
                         rootPackage = "".concat(process.cwd(), "/package.json");
-                        return [4, Workspaces.append(rootPackage, authInstance.getInstallationPath())];
+                        return [4, helpers_1.Workspaces.append(rootPackage, authInstance.getInstallationPath())];
                     case 5:
                         _a.sent();
                         _a.label = 6;
