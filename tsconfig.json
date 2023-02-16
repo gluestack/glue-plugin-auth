@@ -10,6 +10,7 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
+		"declaration": true,
 		"paths": {
 			"@gluestack/framework": ["node_modules/@gluestack/framework"]
 		},
@@ -18,6 +19,7 @@
 		]
 	},
 	"include": [
-		"src/**/*.ts"
+		"src/**/*.ts",
+		"sdk/**/*.ts",
 	],
 }

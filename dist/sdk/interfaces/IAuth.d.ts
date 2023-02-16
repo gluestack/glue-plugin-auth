@@ -7,9 +7,9 @@ export interface IAuth {
     authToken: string;
     setAuthToken(token: string): string;
     getAuthToken(): string;
-    getUser(): Promise<IUser>;
+    getUser(): Promise<IUser | null>;
     isLoggedIn(): Promise<boolean>;
-    login(args: ILoginArgs): Promise<IUser | null>;
+    login(args: ILoginArgs): Promise<IUser | undefined>;
 }
 export interface ISignupWithEmail extends Record<string, string | boolean | number | undefined> {
     email: string;

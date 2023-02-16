@@ -52,7 +52,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.AuthPlugin = exports.HttpMethod = void 0;
 var axios_1 = __importDefault(require("axios"));
-var sdk_1 = require("@gluestack/glue-plugin-backend-engine/sdk");
+var sdk_1 = require("@gluestack/glue-plugin-backend-engine/dist/sdk");
 var HttpMethod;
 (function (HttpMethod) {
     HttpMethod["GET"] = "GET";
@@ -77,24 +77,25 @@ var AuthPlugin = (function () {
         return this.authToken;
     };
     AuthPlugin.prototype.getUser = function () {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var engine, user, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         if (!this.authToken) {
                             return [2, null];
                         }
-                        engine = this.sdk.getPluginInstance(sdk_1.EnginePlugin);
-                        _a.label = 1;
+                        engine = (_a = this.sdk) === null || _a === void 0 ? void 0 : _a.getPluginInstance(sdk_1.EnginePlugin);
+                        _b.label = 1;
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _b.trys.push([1, 3, , 4]);
                         return [4, (engine === null || engine === void 0 ? void 0 : engine.invoke("auth", "authentication/me", {}, { "x-hasura-user-token": this.authToken }, HttpMethod.GET))];
                     case 2:
-                        user = _a.sent();
+                        user = _b.sent();
                         return [2, user];
                     case 3:
-                        e_1 = _a.sent();
+                        e_1 = _b.sent();
                         return [2, null];
                     case 4: return [2];
                 }

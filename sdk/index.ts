@@ -12,7 +12,7 @@ import {
   SDK, ISDKPlugin
 } from "@gluestack/glue-plugin-sdk";
 
-import { EnginePlugin } from "@gluestack/glue-plugin-backend-engine/sdk";
+import { EnginePlugin } from "@gluestack/glue-plugin-backend-engine/dist/sdk";
 
 export enum HttpMethod {
 	GET = "GET",
@@ -48,7 +48,7 @@ export class AuthPlugin implements ISDKPlugin, IAuth {
       return null;
     }
 
-    const engine = this.sdk.getPluginInstance(EnginePlugin);
+    const engine = this.sdk?.getPluginInstance(EnginePlugin);
 
     try {
       const user: IUser = await engine?.invoke(
