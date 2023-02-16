@@ -62,7 +62,9 @@ var HttpMethod;
     HttpMethod["PATCH"] = "PATCH";
 })(HttpMethod = exports.HttpMethod || (exports.HttpMethod = {}));
 var AuthPlugin = (function () {
-    function AuthPlugin() {
+    function AuthPlugin(authServiceID) {
+        if (authServiceID === void 0) { authServiceID = 'auth'; }
+        this.authServiceID = authServiceID;
     }
     AuthPlugin.prototype.register = function (sdk) {
         this.sdk = sdk;
@@ -90,7 +92,7 @@ var AuthPlugin = (function () {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
-                        return [4, (engine === null || engine === void 0 ? void 0 : engine.invoke("auth", "authentication/me", {}, { "x-hasura-user-token": this.authToken }, HttpMethod.GET))];
+                        return [4, (engine === null || engine === void 0 ? void 0 : engine.invoke(this.authServiceID, "authentication/me", {}, { "x-hasura-user-token": this.authToken }, HttpMethod.GET))];
                     case 2:
                         user = _b.sent();
                         return [2, user];
@@ -124,7 +126,7 @@ var AuthPlugin = (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         engine = this.sdk.getPluginInstance(sdk_1.EnginePlugin);
-                        return [4, axios_1["default"].post("".concat(engine === null || engine === void 0 ? void 0 : engine.baseURL, "/backend/auth/authentication/signin"), args)];
+                        return [4, axios_1["default"].post("".concat(engine === null || engine === void 0 ? void 0 : engine.baseURL, "/backend/").concat(this.authServiceID, "/authentication/signin"), args)];
                     case 1:
                         data = (_a.sent()).data;
                         if ((data === null || data === void 0 ? void 0 : data.success) && (data === null || data === void 0 ? void 0 : data.data)) {
@@ -152,7 +154,7 @@ var AuthPlugin = (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         engine = this.sdk.getPluginInstance(sdk_1.EnginePlugin);
-                        return [4, axios_1["default"].post("".concat(engine.baseURL, "/authentication/signup"), __assign({}, args))];
+                        return [4, axios_1["default"].post("".concat(engine.baseURL, "/backend/").concat(this.authServiceID, "/authentication/signup"), __assign({}, args))];
                     case 1:
                         data = (_a.sent()).data;
                         if ((data === null || data === void 0 ? void 0 : data.success) && (data === null || data === void 0 ? void 0 : data.data)) {

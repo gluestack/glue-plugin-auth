@@ -25,6 +25,11 @@ export enum HttpMethod {
 export class AuthPlugin implements ISDKPlugin, IAuth {
   sdk: SDK | undefined;
   authToken: string;
+  authServiceID: string;
+
+  constructor(authServiceID: string = 'auth') {
+    this.authServiceID = authServiceID;
+  }
 
   register(sdk: SDK) {
     this.sdk = sdk;
@@ -52,7 +57,7 @@ export class AuthPlugin implements ISDKPlugin, IAuth {
 
     try {
       const user: IUser = await engine?.invoke(
-        "auth",
+        this.authServiceID,
         "authentication/me",
         {},
         { "x-hasura-user-token": this.authToken },
@@ -77,7 +82,7 @@ export class AuthPlugin implements ISDKPlugin, IAuth {
       const engine = this.sdk.getPluginInstance(EnginePlugin);
 
       const { data } = await axios.post(
-        `${engine?.baseURL}/backend/auth/authentication/signin`,
+        `${engine?.baseURL}/backend/${this.authServiceID}/authentication/signin`,
         args
       );
 
@@ -101,16 +106,13 @@ export class AuthPlugin implements ISDKPlugin, IAuth {
       const engine = this.sdk.getPluginInstance(EnginePlugin);
 
       const { data } = await axios.post<IAPIResponse<IUserWithToken>>(
-        `${engine.baseURL}/authentication/signup`,
-        {
-          ...args,
-        }
+        `${engine.baseURL}/backend/${this.authServiceID}/authentication/signup`,
+        { ...args }
       );
 
       if (data?.success && data?.data) {
         // SET THE TOKEN
         this.setAuthToken(data.data.token);
-
         return data?.data;
       }
 

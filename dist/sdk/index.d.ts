@@ -11,6 +11,8 @@ export declare enum HttpMethod {
 export declare class AuthPlugin implements ISDKPlugin, IAuth {
     sdk: SDK | undefined;
     authToken: string;
+    authServiceID: string;
+    constructor(authServiceID?: string);
     register(sdk: SDK): void;
     boot(sdk: SDK): void;
     setAuthToken(token: string): string;
