@@ -8,11 +8,8 @@ import {
   IAuth, ILoginArgs, ISignupWithEmail, IAPIResponse
 } from "./interfaces/IAuth";
 
-import {
-  SDK, ISDKPlugin
-} from "@gluestack/glue-plugin-sdk";
-
-import { EnginePlugin } from "@gluestack/glue-plugin-backend-engine/dist/sdk";
+import { SDK, ISDKPlugin } from "@gluestack/glue-plugin-sdk";
+import { EnginePlugin } from "@gluestack/glue-plugin-backend-engine-sdk";
 
 export enum HttpMethod {
 	GET = "GET",

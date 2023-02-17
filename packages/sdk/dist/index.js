@@ -52,7 +52,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.AuthPlugin = exports.HttpMethod = void 0;
 var axios_1 = __importDefault(require("axios"));
-var sdk_1 = require("@gluestack/glue-plugin-backend-engine/dist/sdk");
+var glue_plugin_backend_engine_sdk_1 = require("@gluestack/glue-plugin-backend-engine-sdk");
 var HttpMethod;
 (function (HttpMethod) {
     HttpMethod["GET"] = "GET";
@@ -88,7 +88,7 @@ var AuthPlugin = (function () {
                         if (!this.authToken) {
                             return [2, null];
                         }
-                        engine = (_a = this.sdk) === null || _a === void 0 ? void 0 : _a.getPluginInstance(sdk_1.EnginePlugin);
+                        engine = (_a = this.sdk) === null || _a === void 0 ? void 0 : _a.getPluginInstance(glue_plugin_backend_engine_sdk_1.EnginePlugin);
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -125,7 +125,7 @@ var AuthPlugin = (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        engine = this.sdk.getPluginInstance(sdk_1.EnginePlugin);
+                        engine = this.sdk.getPluginInstance(glue_plugin_backend_engine_sdk_1.EnginePlugin);
                         return [4, axios_1["default"].post("".concat(engine === null || engine === void 0 ? void 0 : engine.baseURL, "/backend/").concat(this.authServiceID, "/authentication/signin"), args)];
                     case 1:
                         data = (_a.sent()).data;
@@ -153,7 +153,7 @@ var AuthPlugin = (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        engine = this.sdk.getPluginInstance(sdk_1.EnginePlugin);
+                        engine = this.sdk.getPluginInstance(glue_plugin_backend_engine_sdk_1.EnginePlugin);
                         return [4, axios_1["default"].post("".concat(engine.baseURL, "/backend/").concat(this.authServiceID, "/authentication/signup"), __assign({}, args))];
                     case 1:
                         data = (_a.sent()).data;
