@@ -13,7 +13,8 @@ import reWriteFile from "./helpers/reWriteFile";
 import { IHasMigration } from "./interfaces/IHasMigration";
 import { attachGraphqlInstance } from "./helpers/attachGraphqlInstance";
 
-import { Workspaces } from "@gluestack/helpers";
+import { createFolder, Workspaces, writeFile } from "@gluestack/helpers";
+import { join } from "path";
 
 // Do not edit the name of this class
 export class GlueStackPlugin
@@ -112,6 +113,9 @@ export class GlueStackPlugin
       target,
     );
     if (authInstance) {
+      await createFolder(join(authInstance.getInstallationPath(), 'components'));
+      await writeFile(join(authInstance.getInstallationPath(), 'components', 'function.yaml'), '');
+
       await attachGraphqlInstance(authInstance, graphqlInstances);
 
       // update package.json'S name index with the new instance name

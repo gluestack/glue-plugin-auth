@@ -45,6 +45,7 @@ var PluginInstance_1 = require("./PluginInstance");
 var reWriteFile_1 = __importDefault(require("./helpers/reWriteFile"));
 var attachGraphqlInstance_1 = require("./helpers/attachGraphqlInstance");
 var helpers_1 = require("@gluestack/helpers");
+var path_1 = require("path");
 var GlueStackPlugin = (function () {
     function GlueStackPlugin(app, gluePluginStore) {
         this.type = "stateless";
@@ -109,20 +110,26 @@ var GlueStackPlugin = (function () {
                         return [4, this.app.createPluginInstance(this, instanceName, this.getTemplateFolderPath(), target)];
                     case 2:
                         authInstance = _a.sent();
-                        if (!authInstance) return [3, 6];
-                        return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
+                        if (!authInstance) return [3, 8];
+                        return [4, (0, helpers_1.createFolder)((0, path_1.join)(authInstance.getInstallationPath(), 'components'))];
                     case 3:
+                        _a.sent();
+                        return [4, (0, helpers_1.writeFile)((0, path_1.join)(authInstance.getInstallationPath(), 'components', 'function.yaml'), '')];
+                    case 4:
+                        _a.sent();
+                        return [4, (0, attachGraphqlInstance_1.attachGraphqlInstance)(authInstance, graphqlInstances)];
+                    case 5:
                         _a.sent();
                         pluginPackage = "".concat(authInstance.getInstallationPath(), "/package.json");
                         return [4, (0, reWriteFile_1["default"])(pluginPackage, instanceName, 'INSTANCENAME')];
-                    case 4:
+                    case 6:
                         _a.sent();
                         rootPackage = "".concat(process.cwd(), "/package.json");
                         return [4, helpers_1.Workspaces.append(rootPackage, authInstance.getInstallationPath())];
-                    case 5:
+                    case 7:
                         _a.sent();
-                        _a.label = 6;
-                    case 6: return [2];
+                        _a.label = 8;
+                    case 8: return [2];
                 }
             });
         });
