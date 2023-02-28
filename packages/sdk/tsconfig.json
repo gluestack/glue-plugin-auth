@@ -15,9 +15,13 @@
 			"@gluestack/framework": ["node_modules/@gluestack/framework"]
 		},
 		"lib": [
-			"ES2021.String"
+			"ES2021.String",
+			"dom"
 		]
 	},
+	"include": [
+		"*.ts"
+	],
 	"exclude": [
 		"node_modules",
 		"dist"
