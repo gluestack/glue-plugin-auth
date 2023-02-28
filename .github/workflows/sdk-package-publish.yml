@@ -11,7 +11,7 @@ on:
 
 jobs:
   install-cli:
-    name: "CLI: NPM Install"
+    name: "SDK: NPM Install"
     defaults:
       run:
         working-directory: packages/sdk
@@ -24,7 +24,7 @@ jobs:
       - run: npm install
 
   publish-cli:
-    name: "CLI: NPM Publish"
+    name: "SDK: NPM Publish"
     needs: install-cli
     defaults:
       run:
@@ -37,6 +37,12 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: npm install
-      - run: npm publish --access=public
+      - run: |
+          if [[ $(git diff --name-only ${{github.event.release.target_commitish}}) == *"packages/sdk"* ]]; then
+            echo "Changes were made in packages/sdk. Publishing package..."
+            npm publish --access=public
+          else
+            echo "No changes were made in packages/sdk. Skipping npm publish."
+          fi
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
