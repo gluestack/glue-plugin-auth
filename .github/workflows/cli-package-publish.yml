@@ -41,6 +41,7 @@ jobs:
           if git diff --name-only HEAD^ HEAD | grep -qvE '^packages/cli/'; then
             echo "No changes in packages/cli directory. Skipping NPM publish."
           else
+            npm install
             npm publish --access=public
           fi
         env:

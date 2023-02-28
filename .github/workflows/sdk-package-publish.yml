@@ -17,8 +17,8 @@ jobs:
         working-directory: packages/sdk
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
       - run: npm install
@@ -31,16 +31,16 @@ jobs:
         working-directory: packages/sdk
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
-      - run: npm install
       - run: |
           if git diff --name-only HEAD^ HEAD | grep -qvE '^packages/sdk/'; then
             echo "No changes in packages/sdk directory. Skipping NPM publish."
           else
+            npm install
             npm publish --access=public
           fi
         env:
