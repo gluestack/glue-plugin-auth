@@ -1,7 +1,7 @@
 import { SDK, ISDKPlugin } from "@gluestack/glue-plugin-sdk";
 import { ILogin } from "./interfaces/ILogin";
 import { IUserWithToken } from "./interfaces";
-import { IAuthProviderEnum } from "interfaces/IAuthProviderEnum";
+import { IAuthProviderEnum } from "./interfaces/IAuthProviderEnum";
 import { IAuthClient, ISignupWithEmail, ILoginWithEmailPasswordArgs } from "./interfaces/IAuth";
 export declare enum HttpMethod {
     GET = "GET",

@@ -1,4 +1,4 @@
-import { IUser, IUserWithToken } from "./interfaces/IUser";
+import { IUser } from "./interfaces/IUser";
 import { IAuthServer, ILoginWithEmailPasswordArgs, ISignupWithEmail } from "./interfaces/IAuth";
 import { SDK, ISDKPlugin } from "@gluestack/glue-plugin-sdk";
 export declare enum HttpMethod {
@@ -20,6 +20,6 @@ export declare class AuthPlugin implements ISDKPlugin, IAuthServer {
     getUser(): Promise<IUser>;
     isLoggedIn(): Promise<boolean>;
     login(args: ILoginWithEmailPasswordArgs): Promise<any>;
-    signup(args: ISignupWithEmail): Promise<string | IUserWithToken>;
+    signup(args: ISignupWithEmail): Promise<any>;
 }
 export default AuthPlugin;

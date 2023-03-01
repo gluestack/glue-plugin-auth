@@ -78,19 +78,21 @@ export class AuthPlugin implements ISDKPlugin, IAuthServer {
 
   async login(args: ILoginWithEmailPasswordArgs) {
     try {
-      const engine = this.sdk.getPluginInstance(EnginePlugin);
+      // const engine = this.sdk.getPluginInstance(EnginePlugin);
 
-      const { data } = await axios.post(
-        `${engine?.baseURL}/backend/${this.authServiceID}/authentication/signin`,
+      // @ts-ignore
+      const response = await this.sdk?.engine.invoke(
+        this.authServiceID,
+        "authentication/signin",
         args
       );
 
-      if (data?.success && data?.data) {
-        this.setAuthToken(data.data.token);
-        return data?.data;
+      if (response?.success && response?.data) {
+        this.setAuthToken(response.data.token);
+        return response?.data;
       }
 
-      return data?.message;
+      return response?.message;
     } catch (error) {
       let message = "Something went wrong";
       if (axios.isAxiosError(error)) {
@@ -102,23 +104,26 @@ export class AuthPlugin implements ISDKPlugin, IAuthServer {
 
   async signup(args: ISignupWithEmail) {
     try {
-      const engine = this.sdk.getPluginInstance(EnginePlugin);
+      // const engine = this.sdk.getPluginInstance(EnginePlugin);
 
-      const { data } = await axios.post<IAPIResponse<IUserWithToken>>(
-        `${engine.baseURL}/backend/${this.authServiceID}/authentication/signup`,
-        { ...args }
+      // @ts-ignore
+      const response = await this.sdk?.engine.invoke(
+        this.authServiceID,
+        "authentication/signup",
+        args
       );
 
-      if (data?.success && data?.data) {
+      if (response?.success && response?.data) {
         // SET THE TOKEN
-        this.setAuthToken(data.data.token);
-        return data?.data;
+        this.setAuthToken(response.data.token);
+        return response?.data;
       }
 
       // RESPONSE
-      return data?.message;
+      return response?.message;
     } catch (error) {
       let message = "Something went wrong";
+      console.log(error);
 
       if (axios.isAxiosError(error)) {
         message = error.message;

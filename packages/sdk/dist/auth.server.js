@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -119,23 +108,23 @@ var AuthPlugin = (function () {
         });
     };
     AuthPlugin.prototype.login = function (args) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var engine, data, error_1, message;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var response, error_1, message;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        engine = this.sdk.getPluginInstance(glue_plugin_backend_engine_sdk_1.EnginePlugin);
-                        return [4, axios_1["default"].post("".concat(engine === null || engine === void 0 ? void 0 : engine.baseURL, "/backend/").concat(this.authServiceID, "/authentication/signin"), args)];
+                        _b.trys.push([0, 2, , 3]);
+                        return [4, ((_a = this.sdk) === null || _a === void 0 ? void 0 : _a.engine.invoke(this.authServiceID, "authentication/signin", args))];
                     case 1:
-                        data = (_a.sent()).data;
-                        if ((data === null || data === void 0 ? void 0 : data.success) && (data === null || data === void 0 ? void 0 : data.data)) {
-                            this.setAuthToken(data.data.token);
-                            return [2, data === null || data === void 0 ? void 0 : data.data];
+                        response = _b.sent();
+                        if ((response === null || response === void 0 ? void 0 : response.success) && (response === null || response === void 0 ? void 0 : response.data)) {
+                            this.setAuthToken(response.data.token);
+                            return [2, response === null || response === void 0 ? void 0 : response.data];
                         }
-                        return [2, data === null || data === void 0 ? void 0 : data.message];
+                        return [2, response === null || response === void 0 ? void 0 : response.message];
                     case 2:
-                        error_1 = _a.sent();
+                        error_1 = _b.sent();
                         message = "Something went wrong";
                         if (axios_1["default"].isAxiosError(error_1)) {
                             message = error_1.message;
@@ -147,24 +136,25 @@ var AuthPlugin = (function () {
         });
     };
     AuthPlugin.prototype.signup = function (args) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var engine, data, error_2, message;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var response, error_2, message;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        engine = this.sdk.getPluginInstance(glue_plugin_backend_engine_sdk_1.EnginePlugin);
-                        return [4, axios_1["default"].post("".concat(engine.baseURL, "/backend/").concat(this.authServiceID, "/authentication/signup"), __assign({}, args))];
+                        _b.trys.push([0, 2, , 3]);
+                        return [4, ((_a = this.sdk) === null || _a === void 0 ? void 0 : _a.engine.invoke(this.authServiceID, "authentication/signup", args))];
                     case 1:
-                        data = (_a.sent()).data;
-                        if ((data === null || data === void 0 ? void 0 : data.success) && (data === null || data === void 0 ? void 0 : data.data)) {
-                            this.setAuthToken(data.data.token);
-                            return [2, data === null || data === void 0 ? void 0 : data.data];
+                        response = _b.sent();
+                        if ((response === null || response === void 0 ? void 0 : response.success) && (response === null || response === void 0 ? void 0 : response.data)) {
+                            this.setAuthToken(response.data.token);
+                            return [2, response === null || response === void 0 ? void 0 : response.data];
                         }
-                        return [2, data === null || data === void 0 ? void 0 : data.message];
+                        return [2, response === null || response === void 0 ? void 0 : response.message];
                     case 2:
-                        error_2 = _a.sent();
+                        error_2 = _b.sent();
                         message = "Something went wrong";
+                        console.log(error_2);
                         if (axios_1["default"].isAxiosError(error_2)) {
                             message = error_2.message;
                         }

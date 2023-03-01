@@ -4,7 +4,7 @@ import { SDK, ISDKPlugin } from "@gluestack/glue-plugin-sdk";
 import { ILogin } from "./interfaces/ILogin";
 import { IUserWithToken } from "./interfaces";
 import { IAPIResponse } from "./interfaces/IAPIResponse";
-import { IAuthProviderEnum } from "interfaces/IAuthProviderEnum";
+import { IAuthProviderEnum } from "./interfaces/IAuthProviderEnum";
 import { IAuthClient, ISignupWithEmail, ILoginWithEmailPasswordArgs } from "./interfaces/IAuth";
 
 export enum HttpMethod {
@@ -29,7 +29,7 @@ export class AuthPlugin implements ISDKPlugin, IAuthClient {
   }
 
   boot(sdk: SDK) {
-    // this.sdk = sdk;
+    this.sdk = sdk;
   }
 
   setAuthToken(token: string) {
