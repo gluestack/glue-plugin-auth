@@ -22,10 +22,10 @@ for (const provider of Locals.config().providers) {
     router.get(
       `/${prefix}/${provider}/callback`,
       passport.authenticate(provider, {
-        successRedirect: `/backend/${
+        successRedirect: `${Locals.config().appBaseUrl}/backend/${
         Locals.config().appId
       }/authentication/${prefix}/${provider}/callback/success`,
-        failureRedirect: `/backend/${
+        failureRedirect: `${Locals.config().appBaseUrl}/backend/${
         Locals.config().appId
       }/authentication/${prefix}/${provider}/callback/failure`,
       }),

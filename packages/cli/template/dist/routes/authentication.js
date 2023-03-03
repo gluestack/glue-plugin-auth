@@ -18,8 +18,8 @@ for (const provider of locals_1.default.config().providers) {
     for (const prefix of ["signin", "signup"]) {
         router.get(`/${prefix}/${provider}`, passport_1.default.authenticate(provider));
         router.get(`/${prefix}/${provider}/callback`, passport_1.default.authenticate(provider, {
-            successRedirect: `/backend/${locals_1.default.config().appId}/authentication/${prefix}/${provider}/callback/success`,
-            failureRedirect: `/backend/${locals_1.default.config().appId}/authentication/${prefix}/${provider}/callback/failure`,
+            successRedirect: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/${prefix}/${provider}/callback/success`,
+            failureRedirect: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/${prefix}/${provider}/callback/failure`,
         }));
         router.get(`/${prefix}/${provider}/callback/success`, handlers_1.default[`social${helpers_1.default.capitalizeFirstLetter(prefix)}Success`]);
         router.get(`/${prefix}/${provider}/callback/failure`, handlers_1.default[`social${helpers_1.default.capitalizeFirstLetter(prefix)}Failure`]);

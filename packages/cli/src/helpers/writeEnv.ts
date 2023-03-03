@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { join } from "path";
 import { PluginInstance as AuthPluginInstance } from "../PluginInstance";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
@@ -10,8 +11,17 @@ export async function constructEnvFromJson(
   graphqlInstance: GraphqlPluginInstance,
 ) {
   const json = await graphqlInstance.getContainerController().getEnv();
+  let port = "PORT";
+  try {
+    const mappings = require(join(process.cwd(), "router.map.js"))();
+    port = mappings.api || "PORT";
+  } catch (e) {
+    //
+  }
+
   const keys: any = {
     APP_PORT: await authInstance.getContainerController().getPortNumber(),
+    APP_BASE_URL: `http://localhost:${port}`,
     APP_ID: removeSpecialChars(authInstance.getName()),
     AUTH_TOKEN_EXPIRES_IN: "7D",
     REFRESH_TOKEN_SECRET: "refresh-token-secret",

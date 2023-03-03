@@ -18,7 +18,7 @@ if (Locals.config().googleClientId && Locals.config().googleClientSecret) {
       {
         clientID: Locals.config().googleClientId,
         clientSecret: Locals.config().googleClientSecret,
-        callbackURL: `/backend/${Locals.config().appId}/authentication/signin/google/callback`,
+        callbackURL: `${Locals.config().appBaseUrl}/backend/${Locals.config().appId}/authentication/signin/google/callback`,
         scope: ["email"],
       },
       (req, profile, issuer, done) => {
@@ -34,7 +34,7 @@ if (Locals.config().microsoftClientId && Locals.config().microsoftClientSecret) 
       {
         clientID: Locals.config().microsoftClientId,
         clientSecret: Locals.config().microsoftClientSecret,
-        callbackURL: `/backend/${Locals.config().appId}/authentication/signin/microsoft/callback`,
+        callbackURL: `${Locals.config().appBaseUrl}/backend/${Locals.config().appId}/authentication/signin/microsoft/callback`,
         scope: ["user.read"],
       },
       (req, issuer, profile, done) => {
@@ -50,7 +50,7 @@ if (Locals.config().githubClientId && Locals.config().githubClientSecret) {
       {
         clientID: Locals.config().githubClientId,
         clientSecret: Locals.config().githubClientSecret,
-        callbackURL: `/backend/${Locals.config().appId}/authentication/signin/github/callback`,
+        callbackURL: `${Locals.config().appBaseUrl}/backend/${Locals.config().appId}/authentication/signin/github/callback`,
         scope: ["user:email"],
       },
       (req, issuer, profile, done) => {
@@ -66,7 +66,7 @@ if (Locals.config().googleClientId && Locals.config().googleClientSecret) {
       {
         clientID: Locals.config().googleClientId,
         clientSecret: Locals.config().googleClientSecret,
-        callbackURL: `/backend/${Locals.config().appId}/authentication/signup/google/callback`,
+        callbackURL: `${Locals.config().appBaseUrl}/backend/${Locals.config().appId}/authentication/signup/google/callback`,
         scope: ["email"],
       },
       (req, profile, issuer, done) => {
@@ -82,7 +82,7 @@ if (Locals.config().microsoftClientId && Locals.config().microsoftClientSecret) 
       {
         clientID: Locals.config().microsoftClientId,
         clientSecret: Locals.config().microsoftClientSecret,
-        callbackURL: `/backend/${Locals.config().appId}/authentication/signup/microsoft/callback`,
+        callbackURL: `${Locals.config().appBaseUrl}/backend/${Locals.config().appId}/authentication/signup/microsoft/callback`,
         scope: ["user.read"],
       },
       (req, issuer, profile, done) => {
@@ -98,7 +98,7 @@ if (Locals.config().githubClientId && Locals.config().githubClientSecret) {
       {
         clientID: Locals.config().githubClientId,
         clientSecret: Locals.config().githubClientSecret,
-        callbackURL: `/backend/${Locals.config().appId}/authentication/signup/github/callback`,
+        callbackURL: `${Locals.config().appBaseUrl}/backend/${Locals.config().appId}/authentication/signup/github/callback`,
         scope: ["user:email"],
       },
       (req, issuer, profile, done) => {

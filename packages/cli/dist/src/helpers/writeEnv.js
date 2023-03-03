@@ -61,20 +61,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.writeEnv = exports.constructEnvFromJson = void 0;
 var fs = __importStar(require("fs"));
+var path_1 = require("path");
 var removeSpecialChars = require("@gluestack/helpers").removeSpecialChars;
 function constructEnvFromJson(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
-        var json, keys;
+        var json, port, mappings, keys;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4, graphqlInstance.getContainerController().getEnv()];
                 case 1:
                     json = _b.sent();
+                    port = "PORT";
+                    try {
+                        mappings = require((0, path_1.join)(process.cwd(), "router.map.js"))();
+                        port = mappings.api || "PORT";
+                    }
+                    catch (e) {
+                    }
                     _a = {};
                     return [4, authInstance.getContainerController().getPortNumber()];
                 case 2:
                     keys = (_a.APP_PORT = _b.sent(),
+                        _a.APP_BASE_URL = "http://localhost:".concat(port),
                         _a.APP_ID = removeSpecialChars(authInstance.getName()),
                         _a.AUTH_TOKEN_EXPIRES_IN = "7D",
                         _a.REFRESH_TOKEN_SECRET = "refresh-token-secret",

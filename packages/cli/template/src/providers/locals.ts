@@ -11,6 +11,7 @@ class Locals {
 
     const port = process.env.APP_PORT || "";
     const appId = process.env.APP_ID || "";
+    const appBaseUrl = process.env.APP_BASE_URL || "";
 
     const authTokenExpiresIn = process.env.AUTH_TOKEN_EXPIRES_IN || "7D";
 
@@ -42,6 +43,7 @@ class Locals {
     return {
       port,
       appId,
+      appBaseUrl,
       //
       authTokenExpiresIn,
       //

@@ -10,6 +10,7 @@ class Locals {
         dotenv.config({ path: path.join(__dirname, "../../.env") });
         const port = process.env.APP_PORT || "";
         const appId = process.env.APP_ID || "";
+        const appBaseUrl = process.env.APP_BASE_URL || "";
         const authTokenExpiresIn = process.env.AUTH_TOKEN_EXPIRES_IN || "7D";
         const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || "refresh-token-secret";
         const refreshTokenExpiresIn = process.env.REFRESH_TOKEN_EXPIRES_IN || "30D";
@@ -29,6 +30,7 @@ class Locals {
         return {
             port,
             appId,
+            appBaseUrl,
             //
             authTokenExpiresIn,
             //

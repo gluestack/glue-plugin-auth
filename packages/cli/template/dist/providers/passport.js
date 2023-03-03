@@ -15,7 +15,7 @@ if (locals_1.default.config().googleClientId && locals_1.default.config().google
     passport.use(new passport_google_oidc_1.Strategy({
         clientID: locals_1.default.config().googleClientId,
         clientSecret: locals_1.default.config().googleClientSecret,
-        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/google/callback`,
+        callbackURL: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/signin/google/callback`,
         scope: ["email"],
     }, (req, profile, issuer, done) => {
         var _a;
@@ -26,7 +26,7 @@ if (locals_1.default.config().microsoftClientId && locals_1.default.config().mic
     passport.use(new passport_microsoft_1.Strategy({
         clientID: locals_1.default.config().microsoftClientId,
         clientSecret: locals_1.default.config().microsoftClientSecret,
-        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/microsoft/callback`,
+        callbackURL: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/signin/microsoft/callback`,
         scope: ["user.read"],
     }, (req, issuer, profile, done) => {
         var _a;
@@ -37,7 +37,7 @@ if (locals_1.default.config().githubClientId && locals_1.default.config().github
     passport.use(new passport_github2_1.Strategy({
         clientID: locals_1.default.config().githubClientId,
         clientSecret: locals_1.default.config().githubClientSecret,
-        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signin/github/callback`,
+        callbackURL: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/signin/github/callback`,
         scope: ["user:email"],
     }, (req, issuer, profile, done) => {
         var _a;
@@ -48,7 +48,7 @@ if (locals_1.default.config().googleClientId && locals_1.default.config().google
     passport.use(new passport_google_oidc_1.Strategy({
         clientID: locals_1.default.config().googleClientId,
         clientSecret: locals_1.default.config().googleClientSecret,
-        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signup/google/callback`,
+        callbackURL: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/signup/google/callback`,
         scope: ["email"],
     }, (req, profile, issuer, done) => {
         var _a;
@@ -59,7 +59,7 @@ if (locals_1.default.config().microsoftClientId && locals_1.default.config().mic
     passport.use(new passport_microsoft_1.Strategy({
         clientID: locals_1.default.config().microsoftClientId,
         clientSecret: locals_1.default.config().microsoftClientSecret,
-        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signup/microsoft/callback`,
+        callbackURL: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/signup/microsoft/callback`,
         scope: ["user.read"],
     }, (req, issuer, profile, done) => {
         var _a;
@@ -70,7 +70,7 @@ if (locals_1.default.config().githubClientId && locals_1.default.config().github
     passport.use(new passport_github2_1.Strategy({
         clientID: locals_1.default.config().githubClientId,
         clientSecret: locals_1.default.config().githubClientSecret,
-        callbackURL: `/backend/${locals_1.default.config().appId}/authentication/signup/github/callback`,
+        callbackURL: `${locals_1.default.config().appBaseUrl}/backend/${locals_1.default.config().appId}/authentication/signup/github/callback`,
         scope: ["user:email"],
     }, (req, issuer, profile, done) => {
         var _a;
