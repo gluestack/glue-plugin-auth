@@ -83,7 +83,7 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                     return [4, authInstance.getContainerController().getPortNumber()];
                 case 2:
                     keys = (_a.APP_PORT = _b.sent(),
-                        _a.APP_BASE_URL = "http://localhost:".concat(port),
+                        _a.APP_BASE_URL = "%ENDPOINT_API%",
                         _a.APP_ID = removeSpecialChars(authInstance.getName()),
                         _a.AUTH_TOKEN_EXPIRES_IN = "7D",
                         _a.REFRESH_TOKEN_SECRET = "refresh-token-secret",

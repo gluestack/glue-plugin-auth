@@ -21,7 +21,7 @@ export async function constructEnvFromJson(
 
   const keys: any = {
     APP_PORT: await authInstance.getContainerController().getPortNumber(),
-    APP_BASE_URL: `http://localhost:${port}`,
+    APP_BASE_URL: `%ENDPOINT_API%`,
     APP_ID: removeSpecialChars(authInstance.getName()),
     AUTH_TOKEN_EXPIRES_IN: "7D",
     REFRESH_TOKEN_SECRET: "refresh-token-secret",
