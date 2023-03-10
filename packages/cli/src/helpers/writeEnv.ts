@@ -3,6 +3,7 @@ import { join } from "path";
 import { PluginInstance as AuthPluginInstance } from "../PluginInstance";
 import { PluginInstance as GraphqlPluginInstance } from "@gluestack/glue-plugin-graphql/src/PluginInstance";
 import IInstance from "@gluestack/framework/types/plugin/interface/IInstance";
+import { getCrossEnvKey } from "@gluestack/helpers";
 
 const { removeSpecialChars } = require("@gluestack/helpers");
 
@@ -10,7 +11,6 @@ export async function constructEnvFromJson(
   authInstance: AuthPluginInstance,
   graphqlInstance: GraphqlPluginInstance,
 ) {
-  const json = await graphqlInstance.getContainerController().getEnv();
   let port = "PORT";
   try {
     const mappings = require(join(process.cwd(), "router.map.js"))();
@@ -27,12 +27,17 @@ export async function constructEnvFromJson(
     REFRESH_TOKEN_SECRET: "refresh-token-secret",
     REFRESH_TOKEN_EXPIRES_IN: "30D",
     //
-    HASURA_GRAPHQL_UNAUTHORIZED_ROLE:
-      json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
+    HASURA_GRAPHQL_UNAUTHORIZED_ROLE: getEnvKey(
+      graphqlInstance,
+      "HASURA_GRAPHQL_UNAUTHORIZED_ROLE",
+    ),
     HASURA_GRAPHQL_URL: graphqlInstance.getGraphqlURL(),
-    HASURA_GRAPHQL_ADMIN_SECRET: json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
-    HASURA_GRAPHQL_JWT_SECRET: json["JWT_SECRET"],
-    HASURA_GRAPHQL_JWT_KEY: json["JWT_KEY"],
+    HASURA_GRAPHQL_ADMIN_SECRET: getEnvKey(
+      graphqlInstance,
+      "HASURA_GRAPHQL_ADMIN_SECRET",
+    ),
+    HASURA_GRAPHQL_JWT_SECRET: getEnvKey(graphqlInstance, "JWT_SECRET"),
+    HASURA_GRAPHQL_JWT_KEY: getEnvKey(graphqlInstance, "JWT_KEY"),
     HASURA_GRAPHQL_USER_ROLE: "user",
     //
     AUTH_GOOGLE_CLIENT_ID: "",
@@ -59,4 +64,8 @@ export async function writeEnv(
   });
 
   fs.writeFileSync(path, env);
+}
+
+function getEnvKey(graphqlInstance: GraphqlPluginInstance, key: string) {
+  return `%${getCrossEnvKey(graphqlInstance.getName(), key)}%`;
 }

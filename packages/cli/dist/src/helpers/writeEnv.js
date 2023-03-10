@@ -62,16 +62,15 @@ exports.__esModule = true;
 exports.writeEnv = exports.constructEnvFromJson = void 0;
 var fs = __importStar(require("fs"));
 var path_1 = require("path");
+var helpers_1 = require("@gluestack/helpers");
 var removeSpecialChars = require("@gluestack/helpers").removeSpecialChars;
 function constructEnvFromJson(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
-        var json, port, mappings, keys;
+        var port, mappings, keys;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0: return [4, graphqlInstance.getContainerController().getEnv()];
-                case 1:
-                    json = _b.sent();
+                case 0:
                     port = "PORT";
                     try {
                         mappings = require((0, path_1.join)(process.cwd(), "router.map.js"))();
@@ -81,18 +80,18 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                     }
                     _a = {};
                     return [4, authInstance.getContainerController().getPortNumber()];
-                case 2:
+                case 1:
                     keys = (_a.APP_PORT = _b.sent(),
                         _a.APP_BASE_URL = "%ENDPOINT_API%",
                         _a.APP_ID = removeSpecialChars(authInstance.getName()),
                         _a.AUTH_TOKEN_EXPIRES_IN = "7D",
                         _a.REFRESH_TOKEN_SECRET = "refresh-token-secret",
                         _a.REFRESH_TOKEN_EXPIRES_IN = "30D",
-                        _a.HASURA_GRAPHQL_UNAUTHORIZED_ROLE = json["HASURA_GRAPHQL_UNAUTHORIZED_ROLE"] || "",
+                        _a.HASURA_GRAPHQL_UNAUTHORIZED_ROLE = getEnvKey(graphqlInstance, "HASURA_GRAPHQL_UNAUTHORIZED_ROLE"),
                         _a.HASURA_GRAPHQL_URL = graphqlInstance.getGraphqlURL(),
-                        _a.HASURA_GRAPHQL_ADMIN_SECRET = json["HASURA_GRAPHQL_ADMIN_SECRET"] || "",
-                        _a.HASURA_GRAPHQL_JWT_SECRET = json["JWT_SECRET"],
-                        _a.HASURA_GRAPHQL_JWT_KEY = json["JWT_KEY"],
+                        _a.HASURA_GRAPHQL_ADMIN_SECRET = getEnvKey(graphqlInstance, "HASURA_GRAPHQL_ADMIN_SECRET"),
+                        _a.HASURA_GRAPHQL_JWT_SECRET = getEnvKey(graphqlInstance, "JWT_SECRET"),
+                        _a.HASURA_GRAPHQL_JWT_KEY = getEnvKey(graphqlInstance, "JWT_KEY"),
                         _a.HASURA_GRAPHQL_USER_ROLE = "user",
                         _a.AUTH_GOOGLE_CLIENT_ID = "",
                         _a.AUTH_GOOGLE_CLIENT_SECRET = "",
@@ -128,4 +127,7 @@ function writeEnv(authInstance, graphqlInstance) {
     });
 }
 exports.writeEnv = writeEnv;
+function getEnvKey(graphqlInstance, key) {
+    return "%".concat((0, helpers_1.getCrossEnvKey)(graphqlInstance.getName(), key), "%");
+}
 //# sourceMappingURL=writeEnv.js.map
