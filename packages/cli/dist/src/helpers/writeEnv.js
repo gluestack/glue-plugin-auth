@@ -88,7 +88,7 @@ function constructEnvFromJson(authInstance, graphqlInstance) {
                         _a.REFRESH_TOKEN_SECRET = "refresh-token-secret",
                         _a.REFRESH_TOKEN_EXPIRES_IN = "30D",
                         _a.HASURA_GRAPHQL_UNAUTHORIZED_ROLE = getEnvKey(graphqlInstance, "HASURA_GRAPHQL_UNAUTHORIZED_ROLE"),
-                        _a.HASURA_GRAPHQL_URL = graphqlInstance.getGraphqlURL(),
+                        _a.HASURA_GRAPHQL_URL = getEnvKey(graphqlInstance, "GRAPHQL_URL"),
                         _a.HASURA_GRAPHQL_ADMIN_SECRET = getEnvKey(graphqlInstance, "HASURA_GRAPHQL_ADMIN_SECRET"),
                         _a.HASURA_GRAPHQL_JWT_SECRET = getEnvKey(graphqlInstance, "JWT_SECRET"),
                         _a.HASURA_GRAPHQL_JWT_KEY = getEnvKey(graphqlInstance, "JWT_KEY"),
