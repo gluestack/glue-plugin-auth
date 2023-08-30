@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.attachGraphqlInstance = exports.setGraphqlConfig = void 0;
 var prompts = require("prompts");
 var writeEnv_1 = require("./writeEnv");
@@ -63,14 +63,14 @@ function selectGraphqlInstance(graphqlInstances) {
                         return {
                             title: "".concat(graphqlInstance.getName()),
                             description: "Will attach graphql \"".concat(graphqlInstance.getName(), "\""),
-                            value: graphqlInstance
+                            value: graphqlInstance,
                         };
                     });
                     return [4, prompts({
                             type: "select",
                             name: "value",
                             message: "Select a graphql instance",
-                            choices: choices
+                            choices: choices,
                         })];
                 case 1:
                     value = (_a.sent()).value;
@@ -98,7 +98,7 @@ function attachGraphqlInstance(authInstance, graphqlInstances) {
                 case 4:
                     _a.sent();
                     routerFilePath = "".concat(authInstance.getInstallationPath(), "/router.js");
-                    return [4, (0, reWriteFile_1["default"])(routerFilePath, (0, helpers_1.removeSpecialChars)(authInstance.getName()), "services")];
+                    return [4, (0, reWriteFile_1.default)(routerFilePath, (0, helpers_1.removeSpecialChars)(authInstance.getName()), "services")];
                 case 5:
                     _a.sent();
                     _a.label = 6;

@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.copyToGraphql = void 0;
 function copyToGraphql(authInstance, graphqlInstance) {
     return __awaiter(this, void 0, void 0, function () {
@@ -51,8 +51,8 @@ function copyToGraphql(authInstance, graphqlInstance) {
                                     type: "pg_track_table",
                                     args: {
                                         source: graphqlInstance.getDbName(),
-                                        table: "users"
-                                    }
+                                        table: "users",
+                                    },
                                 },
                                 {
                                     type: "pg_create_insert_permission",
@@ -62,14 +62,14 @@ function copyToGraphql(authInstance, graphqlInstance) {
                                         role: "user",
                                         permission: {
                                             check: {
-                                                id: "X-HASURA-USER-ID"
+                                                id: "X-HASURA-USER-ID",
                                             },
                                             set: {
-                                                id: "X-HASURA-USER-ID"
+                                                id: "X-HASURA-USER-ID",
                                             },
-                                            columns: "*"
-                                        }
-                                    }
+                                            columns: "*",
+                                        },
+                                    },
                                 },
                                 {
                                     type: "pg_create_select_permission",
@@ -80,12 +80,12 @@ function copyToGraphql(authInstance, graphqlInstance) {
                                         permission: {
                                             columns: "*",
                                             filter: {
-                                                id: "X-HASURA-USER-ID"
+                                                id: "X-HASURA-USER-ID",
                                             },
                                             limit: 10,
-                                            allow_aggregations: true
-                                        }
-                                    }
+                                            allow_aggregations: true,
+                                        },
+                                    },
                                 },
                                 {
                                     type: "pg_create_update_permission",
@@ -96,13 +96,13 @@ function copyToGraphql(authInstance, graphqlInstance) {
                                         permission: {
                                             columns: "*",
                                             filter: {
-                                                id: "X-HASURA-USER-ID"
+                                                id: "X-HASURA-USER-ID",
                                             },
                                             set: {
-                                                updated_at: "NOW()"
-                                            }
-                                        }
-                                    }
+                                                updated_at: "NOW()",
+                                            },
+                                        },
+                                    },
                                 },
                                 {
                                     type: "pg_create_delete_permission",
@@ -112,12 +112,12 @@ function copyToGraphql(authInstance, graphqlInstance) {
                                         role: "user",
                                         permission: {
                                             filter: {
-                                                id: "X-HASURA-USER-ID"
-                                            }
-                                        }
-                                    }
+                                                id: "X-HASURA-USER-ID",
+                                            },
+                                        },
+                                    },
                                 },
-                            ]
+                            ],
                         })];
                 case 2:
                     _a.sent();
